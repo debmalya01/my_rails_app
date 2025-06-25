@@ -10,13 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_24_165503) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_25_064147) do
+  create_table "bookings", force: :cascade do |t|
+    t.integer "car_id", null: false
+    t.date "service_date"
+    t.text "notes"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["car_id"], name: "index_bookings_on_car_id"
+  end
+
   create_table "cars", force: :cascade do |t|
     t.string "make"
     t.string "model"
     t.integer "year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "owner_name"
+    t.string "registration_number"
   end
 
+  add_foreign_key "bookings", "cars"
 end

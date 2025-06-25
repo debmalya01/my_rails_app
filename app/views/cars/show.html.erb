@@ -1,10 +1,13 @@
-<p style="color: green"><%= notice %></p>
+<%= render "car", car: @car %>
+<h2>Bookings for this Car</h2>
 
-<%= render @car %>
+<%= link_to "New Booking", new_car_booking_path(@car) %>
 
-<div>
-  <%= link_to "Edit this car", edit_car_path(@car) %> |
-  <%= link_to "Back to cars", cars_path %>
-
-  <%= button_to "Destroy this car", @car, method: :delete %>
-</div>
+<ul>
+  <% @car.bookings.each do |booking| %>
+    <li>
+      <%= booking.service_date %> - <%= truncate(booking.notes, length: 40) %>
+      [<%= link_to "View", booking_path(booking) %>]
+    </li>
+  <% end %>
+</ul>
