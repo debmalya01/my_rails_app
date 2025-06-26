@@ -23,7 +23,8 @@ class BookingsController < ApplicationController
 
   # POST /bookings or /bookings.json
   def create
-    @booking = Booking.new(booking_params)
+    @car = Car.find(params[:car_id])
+    @booking = @car.bookings.build(booking_params.except(:car_id))
 
     respond_to do |format|
       if @booking.save
@@ -51,10 +52,11 @@ class BookingsController < ApplicationController
 
   # DELETE /bookings/1 or /bookings/1.json
   def destroy
+    car_id = @booking.car_id
     @booking.destroy!
 
     respond_to do |format|
-      format.html { redirect_to bookings_path, status: :see_other, notice: "Booking was successfully destroyed." }
+      format.html { redirect_to car_path(car_id), status: :see_other, notice: "Booking was successfully destroyed." }
       format.json { head :no_content }
     end
   end
@@ -67,6 +69,6 @@ class BookingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def booking_params
-      params.require(:booking).permit(:car_id, :service_date, :notes)
+      params.require(:booking).permit(:service_date, :notes)
     end
 end

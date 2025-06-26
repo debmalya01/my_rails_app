@@ -1,4 +1,5 @@
-<%= form_with(model: [booking.car || @car, booking], local: true) do |form| %>
+<%= form_with(model: booking, url: booking.persisted? ? booking_path(booking) : car_bookings_path(@car), local: true) do |form| %>
+
 
   <% if booking.errors.any? %>
     <div style="color: red">
@@ -12,11 +13,7 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :car_id, style: "display: block" %>
-    <%= form.text_field :car_id %>
-  </div>
-
+  
   <div>
     <%= form.label :service_date, style: "display: block" %>
     <%= form.date_field :service_date %>

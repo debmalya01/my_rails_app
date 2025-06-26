@@ -7,7 +7,7 @@
   <% @car.bookings.each do |booking| %>
     <li>
       <%= booking.service_date %> - <%= truncate(booking.notes, length: 40) %>
-      [<%= link_to "View", booking_path(booking) %>]
+      <%= link_to "View", booking_path(booking) %>
     </li>
   <% end %>
 </ul>
