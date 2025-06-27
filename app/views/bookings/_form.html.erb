@@ -20,9 +20,27 @@
   </div>
 
   <div>
+    <%= form.label :service_types, "Select Services", style: "display: block" %>
+    <%= form.collection_check_boxes :service_type_ids, ServiceType.all, :id, :name do |b| %>
+      <div>
+        <%= b.check_box %>
+        <%= b.label %>
+      </div>
+    <% end %>
+  </div>
+
+
+  <div>
     <%= form.label :notes, style: "display: block" %>
     <%= form.text_area :notes %>
   </div>
+
+  <div>
+    <%= form.label :service_center_id, "Service Center", style: "display: block" %>
+    <%= form.collection_select :service_center_id, ServiceCenter.all, :id, :name, { prompt: "Choose center" }, required: true %>
+  </div>
+
+
 
   <div>
     <%= form.submit %>

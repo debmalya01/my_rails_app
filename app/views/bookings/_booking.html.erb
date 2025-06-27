@@ -14,4 +14,30 @@
     <%= booking.notes %>
   </p>
 
+
+  <p>
+    <strong>Service Center:</strong>
+    <%= booking.service_center&.name || "Not assigned" %>
+  </p>
+
+  <p>
+    <strong>Center Location:</strong>
+    <%= booking.service_center&.location %>
+  </p>
+
+  <p>
+    <strong>Phone:</strong>
+    <%= booking.service_center&.phone %>
+  </p>
+
+  <p>
+    <strong>Selected Services:</strong>
+    <ul>
+      <% @booking.service_types.each do |stype| %>
+        <li><%= stype.name %> – ₹<%= stype.base_price %></li>
+      <% end %>
+    </ul>
+  </p>
+
+
 </div>
