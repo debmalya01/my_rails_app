@@ -1,11 +1,42 @@
-<h1>CAR APP</h1>
+<!-- Hero Section -->
+<section class="py-5 text-center bg-light">
+  <div class="container">
+    <h1 class="display-4 fw-bold">Welcome to Car Service</h1>
+    <p class="lead text-muted">
+      Book services, manage your vehicles, and keep your car in top condition — all in one place.
+    </p>
+    <%= link_to "Get Started", cars_path, class: "btn btn-primary btn-lg mt-3" %>
+  </div>
+</section>
 
-<nav>
-  <ul>
-    <li><%= link_to "Home", root_path %></li>
-    <li><%= link_to "About", about_path %></li>
-    <li><%= link_to "Cars", cars_path %></li>
-  </ul>
-</nav>
-
-<p></p>
+<!-- Features Section -->
+<section class="py-5">
+  <div class="container">
+    <div class="row text-center">
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">🛠 Full Service</h5>
+            <p class="card-text">Schedule regular services, from oil changes to tire rotations.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">📅 Easy Booking</h5>
+            <p class="card-text">Book appointments quickly with our streamlined interface.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">📋 Vehicle History</h5>
+            <p class="card-text">Keep track of all past bookings and service records in one place.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

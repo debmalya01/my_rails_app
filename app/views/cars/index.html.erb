@@ -1,14 +1,17 @@
-<p style="color: green"><%= notice %></p>
+<p class="text-success"><%= notice %></p>
 
-<h1>Cars</h1>
+<div class="container mt-4">
+  <h1 class="mb-4">Cars</h1>
 
-<div id="cars">
-  <% @cars.each do |car| %>
-    <%= render car %>
-    <p>
-      <%= link_to "Show this car", car %>
-    </p>
-  <% end %>
+  <div class="row">
+    <% @cars.each do |car| %>
+      <div class="col-md-4 mb-4">
+        <%= render car %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="mt-4">
+    <%= link_to "Add New Car", new_car_path, class: "btn btn-primary" %>
+  </div>
 </div>
-
-<%= link_to "New car", new_car_path %>

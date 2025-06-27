@@ -1,4 +1,6 @@
-<h1>Editing booking</h1>
+<%
+=begin%>
+ <h1>Editing booking</h1>
 
 <%= render "form", booking: @booking %>
 
@@ -7,4 +9,24 @@
 <div>
   <%= link_to "Show this booking", @booking %> |
   <%= link_to "Back to bookings", booking_path %>
+</div> 
+<%
+=end%>
+
+
+<div class="container mt-4">
+
+  <h1 class="mb-4 text-primary">✏️ Update Booking</h1>
+
+  <div class="card shadow-sm mb-4">
+    <div class="card-body">
+      <%= render "form", booking: @booking %>
+    </div>
+  </div>
+
+  <div class="d-flex gap-3 flex-wrap">
+    <%= link_to "📄 Show this Booking", @booking, class: "btn btn-outline-primary" %>
+    <%= link_to "⬅️ Back to Car", car_path(@booking.car), class: "btn btn-outline-secondary" %>
+  </div>
+
 </div>

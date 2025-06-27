@@ -1,48 +1,45 @@
-<%= form_with(model: booking, url: booking.persisted? ? booking_path(booking) : car_bookings_path(@car), local: true) do |form| %>
-
+<%= form_with(model: booking, url: booking.persisted? ? booking_path(booking) : car_bookings_path(@car), local: true, html: { class: "container mt-4" }) do |form| %>
 
   <% if booking.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
-
+    <div class="alert alert-danger">
+      <h4><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h4>
       <ul>
-        <% booking.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% booking.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  
-  <div>
-    <%= form.label :service_date, style: "display: block" %>
-    <%= form.date_field :service_date %>
+  <div class="mb-3">
+    <%= form.label :service_date, "Service Date", class: "form-label" %>
+    <%= form.date_field :service_date, class: "form-control", style: "max-width: 300px;" %>
   </div>
 
-  <div>
-    <%= form.label :service_types, "Select Services", style: "display: block" %>
-    <%= form.collection_check_boxes :service_type_ids, ServiceType.all, :id, :name do |b| %>
-      <div>
-        <%= b.check_box %>
-        <%= b.label %>
-      </div>
-    <% end %>
+  <div class="mb-3">
+    <%= form.label :service_type_ids, "Select Services", class: "form-label d-block" %>
+    <div class="d-flex flex-wrap gap-3">
+      <%= form.collection_check_boxes :service_type_ids, ServiceType.order(:name), :id, :name do |b| %>
+        <div class="form-check me-3">
+          <%= b.check_box(class: "form-check-input") %>
+          <%= b.label(class: "form-check-label") %>
+        </div>
+      <% end %>
+    </div>
   </div>
 
-
-  <div>
-    <%= form.label :notes, style: "display: block" %>
-    <%= form.text_area :notes %>
+  <div class="mb-3">
+    <%= form.label :notes, "Notes", class: "form-label" %>
+    <%= form.text_area :notes, rows: 3, class: "form-control", style: "max-width: 500px;" %>
   </div>
 
-  <div>
-    <%= form.label :service_center_id, "Service Center", style: "display: block" %>
-    <%= form.collection_select :service_center_id, ServiceCenter.all, :id, :name, { prompt: "Choose center" }, required: true %>
+  <div class="mb-4">
+    <%= form.label :service_center_id, "Service Center", class: "form-label" %>
+    <%= form.collection_select :service_center_id, ServiceCenter.order(:name), :id, :name,
+        { prompt: "Choose center" },
+        { class: "form-select", required: true, style: "max-width: 300px;" } %>
   </div>
 
+  <%= form.submit booking.persisted? ? "Update Booking" : "Book Service", class: "btn btn-primary" %>
 
-
-  <div>
-    <%= form.submit %>
-  </div>
 <% end %>

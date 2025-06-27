@@ -1,43 +1,52 @@
-<div id="<%= dom_id booking %>">
-  <p>
-    <strong>Car:</strong>
-    <%= booking.car_id %>
-  </p>
+<div id="<%= dom_id booking %>" class="card shadow-sm mb-4">
+  <div class="card-header bg-primary text-white">
+    <h5 class="mb-0">Booking Details</h5>
+  </div>
 
-  <p>
-    <strong>Service date:</strong>
-    <%= booking.service_date %>
-  </p>
+  <div class="card-body">
+    <div class="row mb-2">
+      <div class="col-md-6">
+        <strong>Car:</strong> <%= booking.car_id %>
+      </div>
+      <div class="col-md-6">
+        <strong>Service Date:</strong> <%= booking.service_date.strftime("%d %b %Y") %>
+      </div>
+    </div>
 
-  <p>
-    <strong>Notes:</strong>
-    <%= booking.notes %>
-  </p>
+    <div class="mb-3">
+      <strong>Notes:</strong>
+      <p class="mb-1"><%= booking.notes.presence || "No notes provided." %></p>
+    </div>
 
+    <div class="row mb-3">
+      <div class="col-md-4">
+        <strong>Service Center:</strong><br>
+        <%= booking.service_center&.name || "Not assigned" %>
+      </div>
+      <div class="col-md-4">
+        <strong>Location:</strong><br>
+        <%= booking.service_center&.location %>
+      </div>
+      <div class="col-md-4">
+        <strong>Phone:</strong><br>
+        <%= booking.service_center&.phone %>
+      </div>
+    </div>
 
-  <p>
-    <strong>Service Center:</strong>
-    <%= booking.service_center&.name || "Not assigned" %>
-  </p>
-
-  <p>
-    <strong>Center Location:</strong>
-    <%= booking.service_center&.location %>
-  </p>
-
-  <p>
-    <strong>Phone:</strong>
-    <%= booking.service_center&.phone %>
-  </p>
-
-  <p>
-    <strong>Selected Services:</strong>
-    <ul>
-      <% @booking.service_types.each do |stype| %>
-        <li><%= stype.name %> – ₹<%= stype.base_price %></li>
+    <div>
+      <strong>Selected Services:</strong>
+      <% if @booking.service_types.any? %>
+        <ul class="list-group mt-2">
+          <% @booking.service_types.each do |stype| %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <%= stype.name %>
+              <span class="badge bg-secondary">₹<%= stype.base_price %></span>
+            </li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p class="text-muted mt-2">No services selected.</p>
       <% end %>
-    </ul>
-  </p>
-
-
+    </div>
+  </div>
 </div>

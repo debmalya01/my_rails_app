@@ -1,10 +1,15 @@
-<p style="color: green"><%= notice %></p>
+<% if notice %>
+  <div class="alert alert-success" role="alert">
+    <%= notice %>
+  </div>
+<% end %>
 
 <%= render @booking %>
 
-<div>
-  <%= link_to "Edit this booking", edit_booking_path(@booking) %> |
-  <%= link_to "Back to car", car_path(@booking.car) %>
+<div class="mt-4 d-flex gap-3 flex-wrap">
+  <%= link_to "✏️ Edit this booking", edit_booking_path(@booking), class: "btn btn-outline-primary" %>
 
-  <%= button_to "Destroy this booking", @booking, method: :delete %>
+  <%= link_to "⬅️ Back to Car", car_path(@booking.car), class: "btn btn-outline-secondary" %>
+
+  <%= button_to "🗑️ Destroy this booking", @booking, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
 </div>

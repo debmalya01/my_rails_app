@@ -1,17 +1,10 @@
-<div id="<%= dom_id car %>">
-  <p>
-    <strong>Make:</strong>
-    <%= car.make %>
-  </p>
+<div id="<%= dom_id car %>" class="card h-100 shadow-sm">
+  <div class="card-body">
+    <h5 class="card-title"><%= car.make %> <%= car.model %></h5>
+    <p class="card-text"><strong>Year:</strong> <%= car.year %></p>
 
-  <p>
-    <strong>Model:</strong>
-    <%= car.model %>
-  </p>
-
-  <p>
-    <strong>Year:</strong>
-    <%= car.year %>
-  </p>
-
+    <% unless local_assigns[:suppress_link] %>
+      <%= link_to "View Details", car_path(car), class: "btn btn-outline-primary btn-sm" %>
+    <% end %>
+  </div>
 </div>

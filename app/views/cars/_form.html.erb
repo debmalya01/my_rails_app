@@ -1,31 +1,31 @@
-<%= form_with(model: car, local: true) do |form| %>
-
-  <div class="field">
-    <%= form.label :make %>
-    <%= form.text_field :make %>
+<%= form_with(model: car, local: true, html: { class: "mt-4" }) do |form| %>
+  <div class="mb-3">
+    <%= form.label :make, class: "form-label" %>
+    <%= form.text_field :make, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :model %>
-    <%= form.text_field :model %>
+  <div class="mb-3">
+    <%= form.label :model, class: "form-label" %>
+    <%= form.text_field :model, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :year %>
-    <%= form.number_field :year %>
+  <div class="mb-3">
+    <%= form.label :year, class: "form-label" %>
+    <%= form.number_field :year, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :owner_name %>
-    <%= form.text_field :owner_name %>
+  <div class="mb-3">
+    <%= form.label :owner_name, class: "form-label" %>
+    <%= form.text_field :owner_name, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :registration_number %>
-    <%= form.text_field :registration_number %>
+  <div class="mb-3">
+    <%= form.label :registration_number, class: "form-label" %>
+    <%= form.text_field :registration_number, class: "form-control" %>
   </div>
 
-  <div class="actions">
-    <%= form.submit %>
+  <div class="mt-4">
+    <%= form.submit class: "btn btn-primary" %>
+    <%= link_to "Cancel", cars_path, class: "btn btn-secondary ms-2" %>
   </div>
 <% end %>
