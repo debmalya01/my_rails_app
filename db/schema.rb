@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_27_051656) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_30_092031) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -30,6 +30,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_27_051656) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "service_center_id", null: false
+    t.string "pincode"
     t.index ["car_id"], name: "index_bookings_on_car_id"
     t.index ["service_center_id"], name: "index_bookings_on_service_center_id"
   end
@@ -50,6 +51,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_27_051656) do
     t.string "phone"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "pincode"
   end
 
   create_table "service_types", force: :cascade do |t|

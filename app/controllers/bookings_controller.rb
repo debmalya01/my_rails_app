@@ -21,32 +21,56 @@ class BookingsController < ApplicationController
   def edit
   end
 
+  def assign_nearest_center(booking)
+    user_pincode = booking.pincode.to_i
+
+    centers = ServiceCenter.where.not(pincode: nil)
+
+    nearest_center = centers.min_by do |center|
+      (center.pincode.to_i - user_pincode).abs
+    end
+
+    max_threshold = 20
+
+    if nearest_center && (nearest_center.pincode.to_i - user_pincode).abs <= max_threshold
+      booking.service_center = nearest_center
+      return true
+    else
+      return false
+    end
+  end
+
   # POST /bookings or /bookings.json
   def create
     @car = Car.find(params[:car_id])
     @booking = @car.bookings.build(booking_params.except(:car_id))
 
-    respond_to do |format|
-      if @booking.save
-        format.html { redirect_to @booking, notice: "Booking was successfully created." }
-        format.json { render :show, status: :created, location: @booking }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
-      end
+    if assign_nearest_center(@booking)
+      @booking.save
+      redirect_to @booking, notice: "Booking was successfully updated and assigned."
+    else
+      flash.now[:alert] = "No nearby service center found for the new pincode."
+      render :edit, status: :unprocessable_entity
     end
+    render :edit, status: :unprocessable_entity
   end
 
   # PATCH/PUT /bookings/1 or /bookings/1.json
   def update
-    respond_to do |format|
-      if @booking.update(booking_params)
-        format.html { redirect_to @booking, notice: "Booking was successfully updated." }
-        format.json { render :show, status: :ok, location: @booking }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @booking.errors, status: :unprocessable_entity }
+    @booking.assign_attributes(booking_params)
+    if assign_nearest_center(@booking)
+      respond_to do |format|
+        if @booking.update(booking_params)
+          format.html { redirect_to @booking, notice: "Booking was successfully updated." }
+          format.json { render :show, status: :ok, location: @booking }
+        else
+          format.html { render :edit, status: :unprocessable_entity }
+          format.json { render json: @booking.errors, status: :unprocessable_entity }
+        end
       end
+    else
+      flash.now[:alert] = "No nearby service center found in your area"
+      render :show
     end
   end
 
@@ -69,6 +93,6 @@ class BookingsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def booking_params
-      params.require(:booking).permit(:service_date, :notes, :service_center_id, service_type_ids: [])
+      params.require(:booking).permit(:service_date, :notes, :pincode, service_type_ids: [])
     end
 end

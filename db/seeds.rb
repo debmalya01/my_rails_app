@@ -10,8 +10,8 @@
 
 
 ServiceCenter.create!([
-  { name: "Elite Motors", location: "Downtown", phone: "9876543210" },
-  { name: "QuickFix Garage", location: "Airport Road", phone: "9123456780" }
+  { name: "Elite Motors", location: "Downtown", phone: "9876543210", pincode: 700041 },
+  { name: "QuickFix Garage", location: "Airport Road", phone: "9123456780", pincode: 700037 }
 ])
 
 ServiceType.create!([
