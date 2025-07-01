@@ -28,6 +28,7 @@ class CarsController < ApplicationController
         format.html { redirect_to @car, notice: "Car was successfully created." }
         format.json { render :show, status: :created, location: @car }
       else
+        Rails.logger.debug "🚨 Car creation failed: #{@car.errors.full_messages.inspect}"
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @car.errors, status: :unprocessable_entity }
       end
@@ -65,6 +66,6 @@ class CarsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def car_params
-      params.require(:car).permit(:make, :vehicle_brand_id, :model, :year)
+      params.require(:car).permit(:owner_name, :registration_number, :vehicle_brand_id, :model, :year)
     end
 end
