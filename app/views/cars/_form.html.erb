@@ -1,7 +1,7 @@
 <%= form_with(model: car, local: true, html: { class: "mt-4" }) do |form| %>
-  <div class="mb-3">
-    <%= form.label :make, class: "form-label" %>
-    <%= form.text_field :make, class: "form-control" %>
+  <div class="field">
+    <%= form.label :vehicle_brand_id, "Car Brand" %>
+    <%= form.collection_select :vehicle_brand_id, VehicleBrand.all, :id, :name, prompt: "Select Brand" %>
   </div>
 
   <div class="mb-3">

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_06_30_092031) do
+ActiveRecord::Schema[7.1].define(version: 2025_06_30_110954) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_30_092031) do
     t.datetime "updated_at", null: false
     t.string "owner_name"
     t.string "registration_number"
+    t.bigint "vehicle_brand_id"
+    t.index ["vehicle_brand_id"], name: "index_cars_on_vehicle_brand_id"
+  end
+
+  create_table "service_center_brands", force: :cascade do |t|
+    t.bigint "service_center_id", null: false
+    t.bigint "vehicle_brand_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["service_center_id"], name: "index_service_center_brands_on_service_center_id"
+    t.index ["vehicle_brand_id"], name: "index_service_center_brands_on_vehicle_brand_id"
   end
 
   create_table "service_centers", force: :cascade do |t|
@@ -52,6 +63,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_30_092031) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "pincode"
+    t.integer "max_capacity_per_day"
   end
 
   create_table "service_types", force: :cascade do |t|
@@ -61,8 +73,17 @@ ActiveRecord::Schema[7.1].define(version: 2025_06_30_092031) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "vehicle_brands", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "booking_services", "bookings"
   add_foreign_key "booking_services", "service_types"
   add_foreign_key "bookings", "cars"
   add_foreign_key "bookings", "service_centers"
+  add_foreign_key "cars", "vehicle_brands"
+  add_foreign_key "service_center_brands", "service_centers"
+  add_foreign_key "service_center_brands", "vehicle_brands"
 end

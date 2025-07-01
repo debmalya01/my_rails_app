@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  service_center: one
+  vehicle_model: one
+
+two:
+  service_center: two
+  vehicle_model: two

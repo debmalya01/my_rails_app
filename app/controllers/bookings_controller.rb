@@ -22,38 +22,40 @@ class BookingsController < ApplicationController
   end
 
   def assign_nearest_center(booking)
-    user_pincode = booking.pincode.to_i
-
-    centers = ServiceCenter.where.not(pincode: nil)
-
-    nearest_center = centers.min_by do |center|
-      (center.pincode.to_i - user_pincode).abs
-    end
-
-    max_threshold = 20
-
-    if nearest_center && (nearest_center.pincode.to_i - user_pincode).abs <= max_threshold
+    nearest_center = CenterMatchingService.find_nearest_available_for(booking)
+    if nearest_center
       booking.service_center = nearest_center
       return true
     else
       return false
     end
-  end
+  end  
 
   # POST /bookings or /bookings.json
   def create
     @car = Car.find(params[:car_id])
-    @booking = @car.bookings.build(booking_params.except(:car_id))
+    @booking = @car.bookings.build(booking_params)
+
+    Rails.logger.info "Booking Params: #{booking_params.inspect}"
+    Rails.logger.info "Booking Service Date: #{@booking.service_date.inspect}"
 
     if assign_nearest_center(@booking)
-      @booking.save
-      redirect_to @booking, notice: "Booking was successfully updated and assigned."
+      if @booking.save
+        Rails.logger.info "Booking saved successfully with ID: #{@booking.id}"
+        redirect_to @car, notice: "Booking was successfully created and assigned."
+      else
+        Rails.logger.error "Booking failed to save: #{@booking.errors.full_messages.inspect}"
+        flash.now[:alert] = "Failed to save booking. Please check the details."
+        render :new, status: :unprocessable_entity
+      end
     else
-      flash.now[:alert] = "No nearby service center found for the new pincode."
-      render :edit, status: :unprocessable_entity
+      Rails.logger.warn "No compatible service center found for booking"
+      flash.now[:alert] = "No nearby compatible service center found for the selected brand and location."
+      render :new, status: :unprocessable_entity
     end
-    render :edit, status: :unprocessable_entity
   end
+
+
 
   # PATCH/PUT /bookings/1 or /bookings/1.json
   def update
