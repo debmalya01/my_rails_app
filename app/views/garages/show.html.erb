@@ -1,0 +1,25 @@
+<h2><%= @garage.name %> – Bookings</h2>
+<p>📍 <%= @garage.location %> | 📞 <%= @garage.phone %> | Pincode: <%= @garage.pincode %></p>
+
+<table class="table table-bordered mt-4">
+  <thead>
+    <tr>
+      <th>Car</th>
+      <th>Service Date</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <td><%= booking.car.make %> - <%= booking.car.model %></td>
+        <td><%= booking.service_date %></td>
+        <td><%= booking.status.humanize %></td>
+        <td>
+          <%= link_to "Edit Status", edit_garage_booking_path(@garage, booking), class: "btn btn-sm btn-outline-primary" %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

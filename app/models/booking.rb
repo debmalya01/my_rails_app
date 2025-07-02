@@ -5,6 +5,18 @@ class Booking < ApplicationRecord
   has_many :booking_services, dependent: :destroy
   has_many :service_types, through: :booking_services
 
+  enum status: {
+    pending: 'pending',
+    waiting_for_pickup: 'waiting_for_pickup',
+    pickup_completed: 'pickup_completed',
+    in_service: 'in_service',
+    ready_for_dropoff: 'ready_for_dropoff',
+    dropped_off: 'dropped_off',
+    cancelled: 'cancelled' 
+  }, _prefix: :status
+
+  validates :status, inclusion: { in: statuses.keys }
+
   validates :service_date, presence: true 
   validate :service_date_cannot_be_in_the_past
   validates :service_types, presence: { message: "must include at least one service type" }

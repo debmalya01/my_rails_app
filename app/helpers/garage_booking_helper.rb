@@ -1,0 +1,2 @@
+module GarageBookingHelper
+end
