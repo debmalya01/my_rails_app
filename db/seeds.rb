@@ -1,12 +1,7 @@
 # This file should ensure the existence of records required to run the application in every environment (production,
 # development, test). The code here should be idempotent so that it can be executed at any point in every environment.
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
+
 
 # require 'json'
 
@@ -19,11 +14,15 @@
 
 # puts "Seeded #{VehicleBrand.count} vehicle brands."
 
+# User.create!(name: "Glenn Bracewell", email: "glenn@example.com")
+# User.create!(name: "John Doe", email: "doe@example.com")
+# puts "Seeded #{User.count} users."
 
-ServiceCenter.create!([
-  { name: "Elite Motors", location: "Downtown", phone: "9876543210", pincode: 700041, max_capacity_per_day: 5 },
-  { name: "QuickFix Garage", location: "Airport Road", phone: "9123456780", pincode: 700037, max_capacity_per_day: 3 }
-])
+# ServiceCenter.create!([
+#   { name: "Elite Motors", location: "Downtown", phone: "9876543210", pincode: 700041, max_capacity_per_day: 5 },
+#   { name: "QuickFix Garage", location: "Airport Road", phone: "9123456780", pincode: 700037, max_capacity_per_day: 3 }
+# ])
+# puts "Seeded #{ServiceCenter.count} service centers."
 
 # ServiceType.create!([
 #   { name: "Interim Car Service", base_price: 3000 },
@@ -49,6 +48,7 @@ ServiceCenter.create!([
 #   { name: "Engine Inspection", base_price: 1300 },
 #   { name: "General Inspection", base_price: 1000 }
 # ])
+# puts "Seeded #{ServiceType.count} service types"
 
 # ServiceCenter.all.each do |center|
 #   # Assign 5 random brands to each center
@@ -59,16 +59,18 @@ ServiceCenter.create!([
 #     )
 #   end
 # end
+# puts "Seeded ServiceCenterBrand mappings for each service center."
 
-# puts "ServiceCenterBrand mappings: #{ServiceCenterBrand.count} created."
-
-[1, 2].each do |center_id|
-  [1, 2, 3, 4].each do |brand_id|
+[1,2].each do |center|
+  [1,2,3,4].each do |brand|
     ServiceCenterBrand.find_or_create_by!(
-      service_center_id: center_id,
-      vehicle_brand_id: brand_id
+      service_center_id:center,
+      vehicle_brand_id:brand
     )
   end
 end
+
+puts "ServiceCenterBrand mappings: #{ServiceCenterBrand.count} created."
+
 
 

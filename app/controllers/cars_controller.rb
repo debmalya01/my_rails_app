@@ -3,7 +3,7 @@ class CarsController < ApplicationController
 
   # GET /cars or /cars.json
   def index
-    @cars = Car.all
+    @cars = current_user.cars
   end
 
   # GET /cars/1 or /cars/1.json
@@ -19,9 +19,9 @@ class CarsController < ApplicationController
   def edit
   end
 
-  # POST /cars or /cars.json
+  # POST /cars or /cars.json 
   def create
-    @car = Car.new(car_params)
+    @car = current_user.cars.build(car_params)
 
     respond_to do |format|
       if @car.save
@@ -61,11 +61,11 @@ class CarsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_car
-      @car = Car.find(params[:id])
+      @car = current_user.cars.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
     def car_params
-      params.require(:car).permit(:owner_name, :registration_number, :vehicle_brand_id, :model, :year)
+      params.require(:car).permit(:registration_number, :vehicle_brand_id, :model, :year)
     end
 end

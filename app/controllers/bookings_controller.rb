@@ -33,7 +33,7 @@ class BookingsController < ApplicationController
 
   # POST /bookings or /bookings.json
   def create
-    @car = Car.find(params[:car_id])
+    @car = current_user.cars.find(params[:car_id])
     @booking = @car.bookings.build(booking_params)
 
     Rails.logger.info "Booking Params: #{booking_params.inspect}"
@@ -90,7 +90,7 @@ class BookingsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_booking
-      @booking = Booking.find(params[:id])
+      @booking = current_user.bookings.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
