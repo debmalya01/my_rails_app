@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   # get 'garage_booking/index'
   # get 'garage_booking/edit'
   # get 'garage_booking/update'

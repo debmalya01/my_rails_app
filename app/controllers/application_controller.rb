@@ -1,7 +1,11 @@
 class ApplicationController < ActionController::Base
-  helper_method :current_user
+  before_action :authenticate_user!
+  before_action :configure_permitted_paramters, if: :devise_controller?
 
-  def current_user
-    User.second # TEMP: Replace with actual authentication later
-  end
+  protected
+
+  def configure_permitted_paramters
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+  end 
 end

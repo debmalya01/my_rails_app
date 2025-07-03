@@ -1,4 +1,5 @@
 class GaragesController < ApplicationController
+  skip_before_action :authenticate_user!
   def index
     @garages = ServiceCenter.all.order(:name)
   end

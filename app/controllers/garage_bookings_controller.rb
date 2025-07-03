@@ -1,4 +1,5 @@
 class GarageBookingsController < ApplicationController
+  skip_before_action :authenticate_user!
   before_action :set_garage
   before_action :set_booking, only: [:edit, :update]
 
