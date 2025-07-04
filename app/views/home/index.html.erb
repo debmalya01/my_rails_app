@@ -3,37 +3,41 @@
   <div class="container">
     <h1 class="display-4 fw-bold">Welcome to Car Service</h1>
     <p class="lead text-muted">
-      Book services, manage your vehicles, and keep your car in top condition — all in one place.
+      Manage your vehicle or your garage – all from one platform.
     </p>
-    <%= link_to "Get Started", cars_path, class: "btn btn-primary btn-lg mt-3" %>
+    <div class="d-flex justify-content-center gap-3 mt-4">
+      <%= link_to "I'm a Car Owner", new_user_registration_path(type: "CarOwner"), class: "btn btn-lg btn-primary px-4" %>
+      <%= link_to "I'm a Garage Admin", new_user_registration_path(type: "GarageAdmin"), class: "btn btn-lg btn-outline-secondary px-4" %>
+    </div>
+    <p class="mt-3 small text-muted">Already have an account? <%= link_to "Login here", new_user_session_path %></p>
   </div>
 </section>
 
 <!-- Features Section -->
-<section class="py-5">
+<section class="py-5 bg-white">
   <div class="container">
     <div class="row text-center">
       <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm border-0">
           <div class="card-body">
             <h5 class="card-title">🛠 Full Service</h5>
-            <p class="card-text">Schedule regular services, from oil changes to tire rotations.</p>
+            <p class="card-text text-muted">Schedule and track your vehicle's services with ease.</p>
           </div>
         </div>
       </div>
       <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm border-0">
           <div class="card-body">
             <h5 class="card-title">📅 Easy Booking</h5>
-            <p class="card-text">Book appointments quickly with our streamlined interface.</p>
+            <p class="card-text text-muted">Book appointments in just a few clicks with nearby garages.</p>
           </div>
         </div>
       </div>
       <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm">
+        <div class="card h-100 shadow-sm border-0">
           <div class="card-body">
             <h5 class="card-title">📋 Vehicle History</h5>
-            <p class="card-text">Keep track of all past bookings and service records in one place.</p>
+            <p class="card-text text-muted">Maintain your full vehicle service history digitally.</p>
           </div>
         </div>
       </div>
