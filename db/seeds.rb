@@ -50,27 +50,30 @@
 # ])
 # puts "Seeded #{ServiceType.count} service types"
 
-# ServiceCenter.all.each do |center|
-#   # Assign 5 random brands to each center
-#   VehicleBrand.order("RANDOM()").limit(5).each do |brand|
-#     ServiceCenterBrand.find_or_create_by!(
-#       service_center: center,
-#       vehicle_brand: brand
-#     )
-#   end
-# end
-# puts "Seeded ServiceCenterBrand mappings for each service center."
-
-[1,2].each do |center|
-  [1,2,3,4].each do |brand|
+ServiceCenter.all.each do |center|
+  # Assign 4 hardcoded brand IDs (1 to 4) to each center
+  [1, 2, 3, 4].each do |brand|
     ServiceCenterBrand.find_or_create_by!(
-      service_center_id:center,
-      vehicle_brand_id:brand
+      service_center_id: center.id,
+      vehicle_brand_id: brand
     )
   end
 end
 
-puts "ServiceCenterBrand mappings: #{ServiceCenterBrand.count} created."
+puts "Seeded ServiceCenterBrand mappings for each service center."
+
+
+# [1,2].each do |center|
+  # [1,2,3,4].each do |brand|
+  #   ServiceCenterBrand.find_or_create_by!(
+  #     service_center_id:center,
+  #     vehicle_brand_id:brand
+  #   )
+  # end
+# end
+
+# puts "ServiceCenterBrand mappings: #{ServiceCenterBrand.count} created."
 
 
 
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

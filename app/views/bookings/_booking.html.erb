@@ -21,12 +21,9 @@
     <div class="row mb-3">
       <div class="col-md-4">
         <strong>Service Center:</strong><br>
-        <%= booking.service_center&.name || "Not assigned" %>
+        <%= booking.service_center&.garage_name || "Not assigned" %>
       </div>
-      <div class="col-md-4">
-        <strong>Location:</strong><br>
-        <%= booking.service_center&.location %>
-      </div>
+      
       <div class="col-md-4">
         <strong>Phone:</strong><br>
         <%= booking.service_center&.phone %>

@@ -42,12 +42,17 @@
             <li class="nav-item">
               <%= link_to "About", about_path, class: "nav-link" %>
             </li>
-            <li class="nav-item">
-              <%= link_to "Cars", cars_path, class: "nav-link" %>
-            </li>
-            <li class="nav-item">
-              <%= link_to "Garages", garages_path, class: "nav-link" %>
-            </li>
+            <% if user_signed_in? %>
+              <% if current_user.car_owner? %>
+                <li class="nav-item">
+                  <%= link_to "My Cars", cars_path, class: "nav-link" %>
+                </li>
+              <% elsif current_user.garage_admin? %>
+                <li class="nav-item">
+                  <%= link_to "My Garage", garages_path, class: "nav-link" %>
+                </li>
+              <% end %>
+            <% end %>
           </ul>
         </div>
       </div>

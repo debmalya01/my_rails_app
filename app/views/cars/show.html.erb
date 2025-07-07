@@ -13,7 +13,7 @@
           <div>
             <strong><%= booking.service_date.strftime("%b %d, %Y") %></strong> – 
             <%= truncate(booking.notes.presence || "No notes", length: 40) %><br/>
-            <small class="text-muted">Service Center: <%= booking.service_center&.name || 'Not Assigned' %></small>
+            <small class="text-muted">Service Center: <%= booking.service_center&.garage_name || 'Not Assigned' %></small>
           </div>
           <%= link_to "View", booking_path(booking), class: "btn btn-sm btn-outline-secondary" %>
         </li>
