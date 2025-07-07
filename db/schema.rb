@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_06_162536) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_07_070929) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -62,6 +62,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_06_162536) do
     t.index ["service_center_id"], name: "index_bookings_on_service_center_id"
   end
 
+  create_table "business_licenses", force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.string "license_number"
+    t.string "issued_by"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_business_licenses_on_document_id"
+  end
+
   create_table "cars", force: :cascade do |t|
     t.string "make"
     t.string "model"
@@ -73,6 +82,23 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_06_162536) do
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_cars_on_user_id"
     t.index ["vehicle_brand_id"], name: "index_cars_on_vehicle_brand_id"
+  end
+
+  create_table "documents", force: :cascade do |t|
+    t.string "documentable_type", null: false
+    t.bigint "documentable_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable"
+  end
+
+  create_table "rc_documents", force: :cascade do |t|
+    t.bigint "document_id", null: false
+    t.string "rc_number"
+    t.date "issue_date"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["document_id"], name: "index_rc_documents_on_document_id"
   end
 
   create_table "service_center_brands", force: :cascade do |t|
@@ -127,8 +153,10 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_06_162536) do
   add_foreign_key "booking_services", "service_types"
   add_foreign_key "bookings", "cars"
   add_foreign_key "bookings", "service_centers"
+  add_foreign_key "business_licenses", "documents"
   add_foreign_key "cars", "users"
   add_foreign_key "cars", "vehicle_brands"
+  add_foreign_key "rc_documents", "documents"
   add_foreign_key "service_center_brands", "service_centers"
   add_foreign_key "service_center_brands", "vehicle_brands"
   add_foreign_key "service_centers", "users"
