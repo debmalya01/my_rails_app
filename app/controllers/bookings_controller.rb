@@ -40,7 +40,7 @@ class BookingsController < UserController
     Rails.logger.info "Booking Service Date: #{@booking.service_date.inspect}"
 
     if assign_nearest_center(@booking)
-      if @booking.saveApplicationController
+      if @booking.save
         Rails.logger.info "Booking saved successfully with ID: #{@booking.id}"
         redirect_to @car, notice: "Booking was successfully created and assigned."
       else

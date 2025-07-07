@@ -1,9 +1,10 @@
 class ServiceCenter < ApplicationRecord
+    after_create :create_document
     belongs_to :user, class_name: 'GarageAdmin'
     has_many :bookings
     has_many :service_center_brands
     has_many :vehicle_brands, through: :service_center_brands
-    
+
     has_one :document, as: :documentable, dependent: :destroy
     has_one :business_license, through: :document
 
@@ -19,4 +20,11 @@ class ServiceCenter < ApplicationRecord
     def self.ransackable_associations(auth_object = nil)
         %w[bookings user]
     end
+
+    private
+    def create_document
+        document = Document.create(documentable: self)
+        BusinessLicense.create!(document: document, license_number:license_number, issued_by: 'Govt')
+    end
+    
 end
