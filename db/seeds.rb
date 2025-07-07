@@ -76,3 +76,4 @@ puts "Seeded ServiceCenterBrand mappings for each service center."
 
 
 
+AdminUser.create!(email: 'admin@example.com', password: 'password', password_confirmation: 'password') if Rails.env.development?

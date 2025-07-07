@@ -22,6 +22,15 @@ class Booking < ApplicationRecord
   validates :service_types, presence: { message: "must include at least one service type" }
   validates :pincode, format: { with: /\A\d{6}\z/, message: "must be a 6-digit number" }, presence: true
 
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["service_date", "status"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    %w[car service_center]
+  end
+
   private
   def service_date_cannot_be_in_the_past
     if service_date.present? && service_date < Date.today

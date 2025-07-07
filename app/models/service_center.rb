@@ -8,4 +8,12 @@ class ServiceCenter < ApplicationRecord
     validates :phone, format: { with: /\A\d{10}\z/, message: "must be a 10-digit number" }
     validates :pincode, format: { with: /\A\d{6}\z/, message: "must be a 6-digit number" }
     validates :max_capacity_per_day, numericality: { only_integer: true, greater_than: 0 }
+
+    def self.ransackable_attributes(auth_object = nil)
+        %w[garage_name phone pincode max_capacity_per_day license_number] 
+    end
+
+    def self.ransackable_associations(auth_object = nil)
+        %w[bookings user]
+    end
 end
