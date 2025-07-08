@@ -20,7 +20,9 @@ Rails.application.routes.draw do
 
   authenticate :user, lambda { |u| u.garage_admin? } do
     resources :garages, only: [:index, :show] do
-      resources :bookings, only: [:index, :edit, :update], controller: 'garage_bookings'
+      resources :bookings, only: [:index, :edit, :update], controller: 'garage_bookings' do
+        resources :invoices, only: [:show]
+      end
     end
   end
   
