@@ -5,9 +5,16 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    build_resource(type: params[:type])
+
+    if resource.is_a?(GarageAdmin)
+      resource.build_service_center
+    end
+
+    respond_with resource
+  end
+
 
   # POST /resource
   # def create

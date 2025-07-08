@@ -5,7 +5,7 @@ class Booking < ApplicationRecord
 
   has_many :booking_services, dependent: :destroy
   has_many :service_types, through: :booking_services
-  # belongs_to :user, class_name: 'CarOwner', foreign_key: 'user_id'
+  belongs_to :user, class_name: 'CarOwner', foreign_key: 'user_id'
   has_one :invoice, dependent: :destroy  
 
   enum status: {
@@ -27,7 +27,7 @@ class Booking < ApplicationRecord
 
 
   def self.ransackable_attributes(auth_object = nil)
-    ["notes", "service_date", "status", "pincode", "car_id", "service_center_id", "id", "booking_services_id", "service_types_id" ]
+    ["notes", "service_date", "status", "pincode", "car_id", "service_center_id", "id", "booking_services_id", "service_types_id", "user_id", "invoice_id"]
   end
 
   def self.ransackable_associations(auth_object = nil)

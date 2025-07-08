@@ -3,12 +3,4 @@ class GarageAdmin < User
   accepts_nested_attributes_for :service_center
   validates_associated :service_center
 
-  after_initialize :build_service_center_if_nil
-
-  private
-
-  def build_service_center_if_nil
-    build_service_center if new_record? && service_center.nil?
-  end
-
 end
