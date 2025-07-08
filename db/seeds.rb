@@ -24,43 +24,43 @@
 # ])
 # puts "Seeded #{ServiceCenter.count} service centers."
 
-# ServiceType.create!([
-#   { name: "Interim Car Service", base_price: 3000 },
-#   { name: "Full Car Service", base_price: 4800 },
-#   { name: "Major Service", base_price: 6200 },
-#   { name: "Oil Change", base_price: 1500 },
-#   { name: "Oil Filter Replacement", base_price: 700 },
-#   { name: "Air Filter Replacement", base_price: 600 },
-#   { name: "Cabin Filter Replacement", base_price: 650 },
-#   { name: "Brake Service", base_price: 2200 },
-#   { name: "Brake Examination", base_price: 800 },
-#   { name: "Brake Fluid Exchange", base_price: 1100 },
-#   { name: "Battery Testing", base_price: 500 },
-#   { name: "Battery Replacement", base_price: 4000 },
-#   { name: "Spark Plugs Replacement", base_price: 1000 },
-#   { name: "Rotate Tires", base_price: 800 },
-#   { name: "Wheel Alignment", base_price: 1200 },
-#   { name: "Tires Replacement", base_price: 4500 },
-#   { name: "Check Coolant Hoses", base_price: 500 },
-#   { name: "Check Coolant Levels", base_price: 450 },
-#   { name: "Check Steering and Suspension", base_price: 900 },
-#   { name: "Suspension Inspection", base_price: 1100 },
-#   { name: "Engine Inspection", base_price: 1300 },
-#   { name: "General Inspection", base_price: 1000 }
-# ])
-# puts "Seeded #{ServiceType.count} service types"
+    # ServiceType.create!([
+    #   { name: "Interim Car Service", base_price: 3000 },
+    #   { name: "Full Car Service", base_price: 4800 },
+    #   { name: "Major Service", base_price: 6200 },
+    #   { name: "Oil Change", base_price: 1500 },
+    #   { name: "Oil Filter Replacement", base_price: 700 },
+    #   { name: "Air Filter Replacement", base_price: 600 },
+    #   { name: "Cabin Filter Replacement", base_price: 650 },
+    #   { name: "Brake Service", base_price: 2200 },
+    #   { name: "Brake Examination", base_price: 800 },
+    #   { name: "Brake Fluid Exchange", base_price: 1100 },
+    #   { name: "Battery Testing", base_price: 500 },
+    #   { name: "Battery Replacement", base_price: 4000 },
+    #   { name: "Spark Plugs Replacement", base_price: 1000 },
+    #   { name: "Rotate Tires", base_price: 800 },
+    #   { name: "Wheel Alignment", base_price: 1200 },
+    #   { name: "Tires Replacement", base_price: 4500 },
+    #   { name: "Check Coolant Hoses", base_price: 500 },
+    #   { name: "Check Coolant Levels", base_price: 450 },
+    #   { name: "Check Steering and Suspension", base_price: 900 },
+    #   { name: "Suspension Inspection", base_price: 1100 },
+    #   { name: "Engine Inspection", base_price: 1300 },
+    #   { name: "General Inspection", base_price: 1000 }
+    # ])
+    # puts "Seeded #{ServiceType.count} service types"
 
-ServiceCenter.all.each do |center|
-  # Assign 4 hardcoded brand IDs (1 to 4) to each center
-  [1, 2, 3, 4].each do |brand|
-    ServiceCenterBrand.find_or_create_by!(
-      service_center_id: center.id,
-      vehicle_brand_id: brand
-    )
-  end
-end
+# ServiceCenter.all.each do |center|
+#   # Assign 4 hardcoded brand IDs (1 to 4) to each center
+#   [1, 2, 3, 4].each do |brand|
+#     ServiceCenterBrand.find_or_create_by!(
+#       service_center_id: center.id,
+#       vehicle_brand_id: brand
+#     )
+#   end
+# end
 
-puts "Seeded ServiceCenterBrand mappings for each service center."
+# puts "Seeded ServiceCenterBrand mappings for each service center."
 
 
 # [1,2].each do |center|
