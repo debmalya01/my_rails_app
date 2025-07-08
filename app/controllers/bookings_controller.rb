@@ -36,6 +36,7 @@ class BookingsController < UserController
   def create
     @car = current_user.cars.find(params[:car_id])
     @booking = @car.bookings.build(booking_params)
+    # @booking.user = current_user
 
     Rails.logger.info "Booking Params: #{booking_params.inspect}"
     Rails.logger.info "Booking Service Date: #{@booking.service_date.inspect}"

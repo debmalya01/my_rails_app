@@ -22,4 +22,5 @@ class User < ApplicationRecord
     %w[cars]
   end
   
+  validates :name, presence: true
 end

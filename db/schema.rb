@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_08_072554) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_08_105346) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -86,6 +86,16 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_072554) do
     t.index ["documentable_type", "documentable_id"], name: "index_documents_on_documentable"
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.bigint "booking_id", null: false
+    t.decimal "amount"
+    t.string "status"
+    t.date "issued_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["booking_id"], name: "index_invoices_on_booking_id"
+  end
+
   create_table "service_center_brands", force: :cascade do |t|
     t.bigint "service_center_id", null: false
     t.bigint "vehicle_brand_id", null: false
@@ -140,6 +150,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_08_072554) do
   add_foreign_key "bookings", "service_centers"
   add_foreign_key "cars", "users"
   add_foreign_key "cars", "vehicle_brands"
+  add_foreign_key "invoices", "bookings"
   add_foreign_key "service_center_brands", "service_centers"
   add_foreign_key "service_center_brands", "vehicle_brands"
   add_foreign_key "service_centers", "users"

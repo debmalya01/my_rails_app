@@ -1,9 +1,12 @@
 class Booking < ApplicationRecord
+  after_create :generate_invoice
   belongs_to :car
   belongs_to :service_center, optional: true
 
   has_many :booking_services, dependent: :destroy
   has_many :service_types, through: :booking_services
+  # belongs_to :user, class_name: 'CarOwner', foreign_key: 'user_id'
+  has_one :invoice, dependent: :destroy  
 
   enum status: {
     pending: 'pending',
@@ -37,4 +40,16 @@ class Booking < ApplicationRecord
       errors.add(:service_date, "can't be in the past")
     end
   end 
+
+  def generate_invoice
+    create_invoice!(
+      amount: calculate_invoice_amount,
+      status: 'pending',
+      issued_at: Date.today
+    )
+  end
+
+  def calculate_invoice_amount
+    service_type_ids.sum { |id| ServiceType.find(id).base_price}
+  end
 end
