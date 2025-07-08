@@ -8,7 +8,10 @@
       <div class="mb-3">
         <%= f.label :type, "I am a" %>
         <%= f.select :type,
-              options_for_select([['Car Owner', 'CarOwner'], ['Garage Admin', 'GarageAdmin']]),
+              options_for_select(
+                [['Car Owner', 'CarOwner'], ['Garage Admin', 'GarageAdmin']],
+                f.object.type
+              ),
               {}, class: "form-control", id: "user_type_select" %>
       </div>
 
@@ -35,33 +38,37 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control" %>
       </div>
 
+      <!-- Garage-specific fields nested via fields_for -->
       <!-- Garage-specific fields -->
       <div id="garage_fields" style="display: none;">
-        <div class="mb-3">
-          <%= f.label :garage_name %>
-          <%= f.text_field :garage_name, class: "form-control" %>
-        </div>
+        <%= f.fields_for :service_center do |g| %>
+          <div class="mb-3">
+            <%= g.label :garage_name %>
+            <%= g.text_field :garage_name, class: "form-control" %>
+          </div>
 
-        <div class="mb-3">
-          <%= f.label :license_number %>
-          <%= f.text_field :license_number, class: "form-control" %>
-        </div>
+          <div class="mb-3">
+            <%= g.label :license_number %>
+            <%= g.text_field :license_number, class: "form-control" %>
+          </div>
 
-        <div class="mb-3">
-          <%= f.label :pincode %>
-          <%= f.text_field :pincode, class: "form-control" %>
-        </div>
+          <div class="mb-3">
+            <%= g.label :pincode %>
+            <%= g.text_field :pincode, class: "form-control" %>
+          </div>
 
-        <div class="mb-3">
-          <%= f.label :phone %>
-          <%= f.text_field :phone, class: "form-control" %>
-        </div>
+          <div class="mb-3">
+            <%= g.label :phone %>
+            <%= g.text_field :phone, class: "form-control" %>
+          </div>
 
-        <div class="mb-3">
-          <%= f.label :max_capacity_per_day %>
-          <%= f.text_field :max_capacity_per_day, class: "form-control" %>
-        </div>
+          <div class="mb-3">
+            <%= g.label :max_capacity_per_day %>
+            <%= g.text_field :max_capacity_per_day, class: "form-control" %>
+          </div>
+        <% end %>
       </div>
+
 
       <div class="actions text-center">
         <%= f.submit "Sign up", class: "btn btn-primary px-5" %>
@@ -73,3 +80,18 @@
     </div>
   </div>
 </div>
+
+<!-- JavaScript to toggle garage fields -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const userType = document.getElementById("user_type_select");
+    const garageFields = document.getElementById("garage_fields");
+
+    function toggleGarageFields() {
+      garageFields.style.display = (userType.value === "GarageAdmin") ? "block" : "none";
+    }
+
+    userType.addEventListener("change", toggleGarageFields);
+    toggleGarageFields(); // Initial check
+  });
+</script>

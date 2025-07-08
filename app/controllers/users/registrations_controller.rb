@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
+  before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
@@ -10,20 +10,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  def create
-    super do |resource|
-      if resource.is_a?(GarageAdmin) && resource.persisted?
-        ServiceCenter.create!(
-          user: resource,
-          garage_name: params[:user][:garage_name],
-          license_number: params[:user][:license_number],
-          max_capacity_per_day: params[:user][:max_capacity_per_day].to_i,
-          phone: params[:user][:phone],
-          pincode: params[:user][:pincode]
-        )
-      end
-    end
-  end
+  # def create
+  #   super do |resource|
+  #     if resource.is_a?(GarageAdmin) && resource.persisted?
+  #       ServiceCenter.create!(
+  #         user: resource,
+  #         garage_name: params[:user][:garage_name],
+  #         license_number: params[:user][:license_number],
+  #         max_capacity_per_day: params[:user][:max_capacity_per_day].to_i,
+  #         phone: params[:user][:phone],
+  #         pincode: params[:user][:pincode]
+  #       )
+  #     end
+  #   end
+  # end
 
   # GET /resource/edit
   # def edit
@@ -49,12 +49,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #   super
   # end
 
-  # protected
+  protected
 
   # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
+  def configure_sign_up_params
+    devise_parameter_sanitizer.permit(:sign_up, keys: [
+      :type, :name, :email, :password, :password_confirmation,
+      service_center_attributes: [:garage_name, :license_number, :pincode, :phone, :max_capacity_per_day]
+    ])
+  end
 
   # If you have extra params to permit, append them to the sanitizer.
   # def configure_account_update_params
