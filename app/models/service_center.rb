@@ -5,8 +5,7 @@ class ServiceCenter < ApplicationRecord
     has_many :service_center_brands
     has_many :vehicle_brands, through: :service_center_brands
 
-    has_one :document, as: :documentable, dependent: :destroy
-    has_one :business_license, through: :document
+    has_many :documents, as: :documentable, dependent: :destroy
 
     validates :garage_name, :phone, :pincode, presence: true
     validates :phone, format: { with: /\A\d{10}\z/, message: "must be a 10-digit number" }
@@ -23,8 +22,12 @@ class ServiceCenter < ApplicationRecord
 
     private
     def create_document
-        document = Document.create(documentable: self)
-        BusinessLicense.create!(document: document, license_number:license_number, issued_by: 'Govt')
+        Document.create!(
+            documentable: self,
+            document_type: :license,
+            number: license_number,
+            issued_at: Date.today
+        )
     end
     
 end

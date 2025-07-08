@@ -1,5 +1,9 @@
 class Document < ApplicationRecord
   belongs_to :documentable, polymorphic: true
-  has_one :rc_document, dependent: :destroy
-  has_one :business_license, dependent: :destroy
+  
+  enum document_type: {
+    rc_document: 'rc_document', license: 'license' 
+  }
+
+  validates :document_type, :number, presence: true
 end

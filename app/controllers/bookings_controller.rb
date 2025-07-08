@@ -23,8 +23,9 @@ class BookingsController < UserController
 
   def assign_nearest_center(booking)
     nearest_center = CenterMatchingService.find_nearest_available_for(booking)
+    Rails.logger.info "Nearest Center: #{nearest_center.inspect}"
     if nearest_center
-      booking.service_center = nearest_center
+      booking.update(service_center: nearest_center)
       return true
     else
       return false
@@ -40,6 +41,7 @@ class BookingsController < UserController
     Rails.logger.info "Booking Service Date: #{@booking.service_date.inspect}"
 
     if assign_nearest_center(@booking)
+      Rails.logger.info "Assigned nearest service center: #{@booking.service_center.inspect}"
       if @booking.save
         Rails.logger.info "Booking saved successfully with ID: #{@booking.id}"
         redirect_to @car, notice: "Booking was successfully created and assigned."
