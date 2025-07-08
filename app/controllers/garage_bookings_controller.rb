@@ -2,6 +2,7 @@ class GarageBookingsController < ApplicationController
   # skip_before_action :authenticate_user!
   before_action :set_garage
   before_action :set_booking, only: [:edit, :update]
+  before_action :authenticate_user!
 
   def index
     @bookings = @garage.bookings.includes(:car).order(service_date: :asc)
@@ -21,7 +22,7 @@ class GarageBookingsController < ApplicationController
 
   private
   def set_garage
-    @garage = ServiceCenter.find(params[:garage_id])
+    @garage = current_user.service_center
   end
 
   def set_booking
