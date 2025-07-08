@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
   attr_accessor :garage_name, :license_number, :location, :pincode, :phone, :max_capacity_per_day

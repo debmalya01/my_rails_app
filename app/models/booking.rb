@@ -24,7 +24,7 @@ class Booking < ApplicationRecord
 
 
   def self.ransackable_attributes(auth_object = nil)
-    ["service_date", "status"]
+    ["notes", "service_date", "status", "pincode", "car_id", "service_center_id", "id", "booking_services_id", "service_types_id" ]
   end
 
   def self.ransackable_associations(auth_object = nil)
