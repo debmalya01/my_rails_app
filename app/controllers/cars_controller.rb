@@ -22,6 +22,7 @@ class CarsController < UserController
   # POST /cars or /cars.json 
   def create
     @car = current_user.cars.build(car_params)
+    @car.make = @car.vehicle_brand.name if @car.vehicle_brand
 
     respond_to do |format|
       if @car.save
