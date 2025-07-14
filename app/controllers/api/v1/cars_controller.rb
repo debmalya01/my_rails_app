@@ -2,6 +2,7 @@ module Api
   module V1 
     class CarsController < ApplicationController
       skip_before_action :verify_authenticity_token
+      before_action :authenticate_user!
       before_action :set_car, only: [:show, :update, :destroy]
 
       # GET /cars or /cars.json
