@@ -51,8 +51,10 @@ gem "devise"
 gem "activeadmin"
 
 # Use Sass for stylesheets
-gem 'sassc-rails'
+gem "sassc-rails"
 
+# Doorkeeper for API authentication
+gem "doorkeeper"
 
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
