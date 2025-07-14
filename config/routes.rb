@@ -25,6 +25,25 @@ Rails.application.routes.draw do
       end
     end
   end
+
+
+  # API routes
+  namespace :api do
+    namespace :v1 do 
+      resources :cars do
+        resources :bookings, shallow: true
+      end
+      resources :garages, only: [:index, :show] do
+        resources :bookings, only: [:index, :edit, :update], controller: 'garage_bookings' do
+          resources :invoices, only: [:show]
+        end
+      end
+      resources :service_types, only: [:index, :show]
+      resources :vehicle_brands, only: [:index]
+      resources :users, only: [:show, :update]
+    end
+  end
+    
   
   get "up" => "rails/health#show", as: :rails_health_check
 

@@ -1,5 +1,6 @@
 class Booking < ApplicationRecord
   after_create :generate_invoice
+  after_update :generate_invoice
   belongs_to :car
   belongs_to :service_center, optional: true
 

@@ -1,27 +1,6 @@
 <div class="container mt-4">
-  <%= render "car", car: @car, suppress_link: true %>
-
-  <div class="d-flex justify-content-between align-items-center mt-5 mb-3">
-    <h2>Bookings for This Car</h2>
-    <%= link_to "New Booking", new_car_booking_path(@car), class: "btn btn-primary" %>
-  </div>
-
-  <% if @car.bookings.any? %>
-    <ul class="list-group">
-      <% @car.bookings.each do |booking| %>
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-          <div>
-            <strong><%= booking.service_date.strftime("%b %d, %Y") %></strong> – 
-            <%= truncate(booking.notes.presence || "No notes", length: 40) %><br/>
-            <small class="text-muted">Service Center: <%= booking.service_center&.garage_name || 'Not Assigned' %></small>
-          </div>
-          <%= link_to "View", booking_path(booking), class: "btn btn-sm btn-outline-secondary" %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p class="text-muted">No bookings available for this car.</p>
-  <% end %>
-
-  <%= link_to "Back to Cars", cars_path, class: "btn btn-link mt-4" %>
+  <div id="car-details"></div>
+  <div id="car-bookings-list"></div>
+  <div class="mt-4" id="car-actions"></div>
 </div>
+<%= javascript_include_tag 'cars_show' %>

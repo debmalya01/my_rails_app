@@ -1,22 +1,5 @@
-<h2>Bookings for <%= @garage.garage_name %></h2>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Car</th>
-      <th>Service Date</th>
-      <th>Status</th>
-      <th>Action</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @bookings.each do |booking| %>
-      <tr>
-        <td><%= booking.car.model %> - <%= booking.car.car_owner.name %></td>
-        <td><%= booking.service_date %></td>
-        <td><%= booking.status.humanize %></td>
-        <td><%= link_to "Update Status", edit_garage_booking_path(@garage, booking), class: "btn btn-sm btn-primary" %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+<div class="container mt-4">
+  <h2 id="garage-bookings-title"></h2>
+  <div id="garage-bookings-table"></div>
+</div>
+<%= javascript_include_tag 'garage_bookings' %>

@@ -1,15 +1,12 @@
 <div class="container mt-4">
-
-  <h1 class="mb-4 text-primary">New Booking for <%= @booking.car.make %></h1>
-
+  <h1 class="mb-4 text-primary" id="booking-title">New Booking</h1>
   <div class="card shadow-sm mb-4">
     <div class="card-body">
-      <%= render "form", booking: @booking %>
+      <div id="booking-form"></div>
     </div>
   </div>
-
   <div>
-    <%= link_to "⬅️ Back to Car", car_path(@car), class: "btn btn-outline-secondary" %>
+    <a href="/cars" class="btn btn-outline-secondary" id="back-link">⬅️ Back to Car</a>
   </div>
-
 </div>
+<%= javascript_include_tag 'bookings_form' %>
