@@ -1,15 +1,5 @@
-<% if notice %>
-  <div class="alert alert-success" role="alert">
-    <%= notice %>
-  </div>
-<% end %>
-
-<%= render @booking %>
-
-<div class="mt-4 d-flex gap-3 flex-wrap">
-  <%= link_to "✏️ Edit this booking", edit_booking_path(@booking), class: "btn btn-outline-primary" %>
-
-  <%= link_to "⬅️ Back to Car", car_path(@booking.car), class: "btn btn-outline-secondary" %>
-
-  <%= button_to "🗑️ Destroy this booking", @booking, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+<div class="container mt-4">
+  <div id="booking-details"></div>
+  <div class="mt-4 d-flex gap-3 flex-wrap" id="booking-actions"></div>
 </div>
+<%= javascript_include_tag 'bookings_show' %>

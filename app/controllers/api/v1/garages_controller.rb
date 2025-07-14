@@ -6,13 +6,27 @@ module Api
 
       def index
         @garages = [current_user.service_center]
-        render json: @garages, status: :ok
+        render json: @garages.as_json(
+          methods: [:bookings_count]
+        ), status: :ok
       end
 
       def show
         @garage = current_user.service_center
         @bookings = @garage.bookings.includes(:car).order(service_date: :asc)
-        render json: { garage: @garage, bookings:@bookings }, status: :ok
+        render json: { 
+          garage: @garage, 
+          bookings: @bookings.as_json(
+            include: {
+              car: { 
+                only: [:id, :make, :model, :year],
+                include: {
+                  vehicle_brand: { only: [:id, :name] }
+                }
+              }
+            }
+          )
+        }, status: :ok
       end
     end
   end

@@ -1,10 +1,5 @@
-<h2>Update Booking Status</h2>
-
-<%= form_with model: [@garage, @booking], url: garage_booking_path(@garage, @booking), local: true do |form| %>
-  <div class="mb-3">
-    <%= form.label :status %>
-    <%= form.select :status, Booking.statuses.keys.map { |s| [s.humanize, s] }, {}, class: "form-control" %>
-  </div>
-
-  <%= form.submit "Update", class: "btn btn-success" %>
-<% end %>
+<div class="container mt-4">
+  <h2>Update Booking Status</h2>
+  <div id="garage-booking-form"></div>
+</div>
+<%= javascript_include_tag 'garage_bookings_edit' %>

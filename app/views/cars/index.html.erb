@@ -1,17 +1,8 @@
-<p class="text-success"><%= notice %></p>
-
 <div class="container mt-4">
   <h1 class="mb-4">Cars</h1>
-
-  <div class="row">
-    <% @cars.each do |car| %>
-      <div class="col-md-4 mb-4">
-        <%= render car %>
-      </div>
-    <% end %>
-  </div>
-
+  <div class="row" id="cars-list"></div>
   <div class="mt-4">
-    <%= link_to "Add New Car", new_car_path, class: "btn btn-primary" %>
+    <a href="/cars/new" class="btn btn-primary">Add New Car</a>
   </div>
 </div>
+<%= javascript_include_tag 'cars' %>

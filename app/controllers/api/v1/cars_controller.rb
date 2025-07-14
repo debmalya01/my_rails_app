@@ -7,15 +7,32 @@ module Api
       # GET /cars or /cars.json
       def index
         cars = current_user.cars
-        render json: cars, status: :ok
+        render json: cars.as_json(
+          include: {
+            vehicle_brand: { only: [:id, :name] }
+          }
+        ), status: :ok
       end
 
       def show
+        render json: @car.as_json(
+          include: {
+            bookings: {
+              only: [:id, :service_date, :notes, :status],
+              include: {
+                service_center: { only: [:garage_name] }
+              }
+            }
+          }
+        ), status: :ok
       end
 
       def new
         @car = Car.new
-        render json: @car, status: :ok
+        render json: {
+          car: @car,
+          current_user: { id: current_user.id, name: current_user.name }
+        }, status: :ok
       end
 
       def create
@@ -32,6 +49,11 @@ module Api
       end
 
       def edit
+        render json: @car.as_json(
+          include: {
+            vehicle_brand: { only: [:id, :name] }
+          }
+        ), status: :ok
       end
 
       def update

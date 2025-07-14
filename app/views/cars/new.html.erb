@@ -1,9 +1,8 @@
 <div class="container mt-4">
   <h1 class="mb-4">Add a New Car</h1>
-
-  <%= render "form", car: @car %>
-
+  <div id="car-form"></div>
   <div class="mt-3">
-    <%= link_to "← Back to Cars", cars_path, class: "btn btn-link" %>
+    <a href="/cars" class="btn btn-link">← Back to Cars</a>
   </div>
 </div>
+<%= javascript_include_tag 'cars_form' %>

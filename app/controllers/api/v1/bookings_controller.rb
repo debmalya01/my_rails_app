@@ -6,12 +6,26 @@ module Api
 
       def index
         @bookings = Booking.all
-        render json: @bookings, status: :ok
+        render json: @bookings.as_json(
+          include: {
+            car: { only: [:id, :make, :model, :year] },
+            service_center: { only: [:id, :garage_name, :phone] },
+            service_types: { only: [:id, :name, :base_price] },
+            invoice: { only: [:id, :amount, :status, :issued_at] }
+          }
+        ), status: :ok
       end
 
       def show
         if @booking
-          render json: @booking, status: :ok
+          render json: @booking.as_json(
+            include: {
+              car: { only: [:id, :make, :model, :year] },
+              service_center: { only: [:id, :garage_name, :phone] },
+              service_types: { only: [:id, :name, :base_price] },
+              invoice: { only: [:id, :amount, :status, :issued_at] }
+            }
+          ), status: :ok
         else
           render json: { error: 'Booking not found' }, status: :not_found
         end
@@ -24,6 +38,12 @@ module Api
       end
       
       def edit
+        render json: @booking.as_json(
+          include: {
+            car: { only: [:id, :make, :model, :year] },
+            service_types: { only: [:id, :name, :base_price] }
+          }
+        ), status: :ok
       end
 
       def assign_nearest_center(booking)

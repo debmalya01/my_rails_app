@@ -1,10 +1,9 @@
-<h1>Editing car</h1>
-
-<%= render "form", car: @car %>
-
-<br>
-
-<div>
-  <%= link_to "Show this car", @car %> |
-  <%= link_to "Back to cars", cars_path %>
+<div class="container mt-4">
+  <h1>Editing car</h1>
+  <div id="car-form"></div>
+  <br>
+  <div>
+    <a href="/cars" class="btn btn-link">Back to cars</a>
+  </div>
 </div>
+<%= javascript_include_tag 'cars_form' %>

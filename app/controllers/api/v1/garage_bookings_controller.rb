@@ -7,11 +7,23 @@ module Api
       before_action :authenticate_user!
 
       def index
-        @bookings = @garage.bookings.includes(:car).order(service_date: :asc
-        render json: @bookings, status: :ok
+        @bookings = @garage.bookings.includes(:car).order(service_date: :asc)
+        render json: { 
+          garage: @garage, 
+          bookings: @bookings.as_json(
+            include: {
+              car: { only: [:id, :make, :model, :year] }
+            }
+          )
+        }, status: :ok
       end
 
       def edit
+        render json: @booking.as_json(
+          include: {
+            car: { only: [:id, :make, :model, :year] }
+          }
+        ), status: :ok
       end
 
       def update

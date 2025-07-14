@@ -20,6 +20,10 @@ class ServiceCenter < ApplicationRecord
         %w[bookings user]
     end
 
+    def bookings_count
+        bookings.count
+    end
+
     private
     def create_document
         Document.create!(

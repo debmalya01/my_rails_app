@@ -34,11 +34,12 @@ Rails.application.routes.draw do
         resources :bookings, shallow: true
       end
       resources :garages, only: [:index, :show] do
-        resources :bookings, only: [:index, :edit, :update], controller: 'api/v1/garage_bookings' do
+        resources :bookings, only: [:index, :edit, :update], controller: 'garage_bookings' do
           resources :invoices, only: [:show]
         end
       end
       resources :service_types, only: [:index, :show]
+      resources :vehicle_brands, only: [:index]
       resources :users, only: [:show, :update]
     end
   end
