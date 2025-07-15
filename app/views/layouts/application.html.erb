@@ -64,6 +64,17 @@
       <% if user_signed_in? %>
          Hello, <%= current_user.name %> |
         <%= button_to 'Logout', destroy_user_session_path, method: :delete, class: "btn btn-sm btn-outline-danger ms-2" %>
+        <%= javascript_tag do %>
+          document.addEventListener('DOMContentLoaded', function() {
+            var logoutButton = document.querySelector('form[action*="sign_out"]');
+            if (logoutButton) {
+              logoutButton.addEventListener('submit', function() {
+                sessionStorage.removeItem('access_token');
+                localStorage.removeItem('access_token')
+              });
+            }
+          });
+        <% end %>
       <% else %>
         <%# <%= link_to 'Sign Up', new_user_registration_path, class: "btn btn-sm btn-primary me-2" %> 
         <%= link_to 'Login', new_user_session_path, class: "btn btn-sm btn-outline-primary" %>
