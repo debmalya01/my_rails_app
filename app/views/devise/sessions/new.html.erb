@@ -2,15 +2,15 @@
   <div class="w-100" style="max-width: 400px; padding: 2rem;">
     <h2 class="text-center mb-4">Log in</h2>
 
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { id: 'dual-login-form' }) do |f| %>
       <div class="mb-3">
         <%= f.label :email %>
-        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control" %>
+        <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "form-control", id: "dual-login-email" %>
       </div>
 
       <div class="mb-3">
         <%= f.label :password %>
-        <%= f.password_field :password, autocomplete: "current-password", class: "form-control" %>
+        <%= f.password_field :password, autocomplete: "current-password", class: "form-control", id: "dual-login-password" %>
       </div>
 
       <% if devise_mapping.rememberable? %>
@@ -20,10 +20,15 @@
         </div>
       <% end %>
 
+      <%= f.hidden_field :api_token_login, value: true, id: "dual-login-api-token" %>
+
       <div class="d-grid">
         <%= f.submit "Log in", class: "btn btn-primary" %>
       </div>
     <% end %>
+
+    <div id="dual-login-token-error" class="text-danger mt-2"></div>
+    <div id="dual-login-token-success" class="text-success mt-2"></div>
 
     <div class="text-center mt-3">
       <%= render "devise/shared/links" %>

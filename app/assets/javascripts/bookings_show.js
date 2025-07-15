@@ -13,7 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  fetch(`/api/v1/bookings/${bookingId}`)
+  fetch(`/api/v1/bookings/${bookingId}`, {
+    headers: {
+      'Accept': 'application/json',
+      ...window.getApiAuthHeaders()
+    }
+  })
     .then(res => res.json())
     .then(booking => {
       // Store booking data globally for delete function
@@ -121,7 +126,8 @@ function deleteBooking(bookingId) {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
-      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+      'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+      ...window.getApiAuthHeaders()
     }
   })
   .then(res => res.json())

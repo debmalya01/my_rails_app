@@ -15,12 +15,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 window.location.pathname.match(/bookings\/(\d+)\/edit/)?.[1] || null;
 
   // First fetch service types for the checkboxes
-  fetch('/api/v1/service_types')
+  fetch('/api/v1/service_types', {
+    headers: {
+      'Accept': 'application/json',
+      ...window.getApiAuthHeaders()
+    }
+  })
     .then(res => res.json())
     .then(serviceTypes => {
       if (isEdit && bookingId) {
         // Fetch existing booking data for edit
-        return fetch(`/api/v1/bookings/${bookingId}/edit`)
+        return fetch(`/api/v1/bookings/${bookingId}/edit`, {
+          headers: {
+            'Accept': 'application/json',
+            ...window.getApiAuthHeaders()
+          }
+        })
           .then(res => res.json())
           .then(booking => {
             updatePageElements(booking, isEdit);
@@ -28,7 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
           });
       } else if (carId) {
         // New booking form - fetch car data
-        return fetch(`/api/v1/cars/${carId}`)
+        return fetch(`/api/v1/cars/${carId}`, {
+          headers: {
+            'Accept': 'application/json',
+            ...window.getApiAuthHeaders()
+          }
+        })
           .then(res => res.json())
           .then(car => {
             updatePageElements(car, isEdit);
@@ -149,7 +164,8 @@ function setupFormSubmission(isEdit, bookingId, carId) {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+        ...window.getApiAuthHeaders()
       },
       body: JSON.stringify(bookingData)
     })

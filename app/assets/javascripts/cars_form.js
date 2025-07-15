@@ -9,17 +9,32 @@ document.addEventListener('DOMContentLoaded', function() {
   const carId = isEdit ? window.location.pathname.match(/cars\/(\d+)\/edit/)?.[1] : null;
 
   // First fetch vehicle brands for the dropdown
-  fetch('/api/v1/vehicle_brands')
+  fetch('/api/v1/vehicle_brands', {
+    headers: {
+      'Accept': 'application/json',
+      ...window.getApiAuthHeaders()
+    }
+  })
     .then(res => res.json())
     .then(brands => {
       if (isEdit && carId) {
         // Fetch existing car data for edit
-        return fetch(`/api/v1/cars/${carId}/edit`)
+        return fetch(`/api/v1/cars/${carId}/edit`, {
+          headers: {
+            'Accept': 'application/json',
+            ...window.getApiAuthHeaders()
+          }
+        })
           .then(res => res.json())
           .then(car => renderCarForm(car, brands, true, carId));
       } else {
         // New car form - fetch car data with current user
-        return fetch('/api/v1/cars/new')
+        return fetch('/api/v1/cars/new', {
+          headers: {
+            'Accept': 'application/json',
+            ...window.getApiAuthHeaders()
+          }
+        })
           .then(res => res.json())
           .then(data => renderCarForm(data.car, brands, false, null, null, data.current_user));
       }
@@ -100,7 +115,8 @@ function setupFormSubmission(isEdit, carId) {
       method: method,
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+        ...window.getApiAuthHeaders()
       },
       body: JSON.stringify(carData)
     })

@@ -14,7 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  fetch(`/api/v1/garages/${garageId}/bookings/${bookingId}/edit`)
+  fetch(`/api/v1/garages/${garageId}/bookings/${bookingId}/edit`, {
+    headers: {
+      'Accept': 'application/json',
+      ...window.getApiAuthHeaders()
+    }
+  })
     .then(res => res.json())
     .then(booking => {
       formContainer.innerHTML = renderBookingForm(booking, garageId, bookingId);
@@ -62,7 +67,8 @@ function setupFormSubmission(garageId, bookingId) {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
-        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || ''
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '',
+        ...window.getApiAuthHeaders()
       },
       body: JSON.stringify({
         booking: { status: status }

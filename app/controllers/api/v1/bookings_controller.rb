@@ -2,7 +2,7 @@ module Api
   module V1 
     class BookingsController < ApplicationController
       skip_before_action :verify_authenticity_token
-      before_action :authenticate_user!
+      before_action :doorkeeper_authorize!
       before_action :set_booking, only: [:show, :edit, :update, :destroy]
 
       def index
@@ -59,9 +59,9 @@ module Api
       end
 
       def create
-        @car = current_user.cars.find(params[:car_id])
+        @car = current_resource_owner.cars.find(params[:car_id])
         @booking = @car.bookings.build(booking_params)
-        @booking.user = current_user
+        @booking.user = current_resource_owner
 
         Rails.logger.info "Booking Params: #{booking_params.inspect}"
         Rails.logger.info "Booking Service Date: #{@booking.service_date.inspect}"
@@ -114,11 +114,15 @@ module Api
 
       private
       def set_booking
-        @booking = current_user.bookings.find(params[:id])
+        @booking = current_resource_owner.bookings.find(params[:id])
       end
 
       def booking_params
         params.require(:booking).permit(:service_date, :notes, :pincode, :status, service_type_ids: [])
+      end
+
+      def current_resource_owner
+        User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
       end
     end
   end
