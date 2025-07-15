@@ -13,7 +13,12 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  fetch(`/api/v1/garages/${garageId}`)
+  fetch(`/api/v1/garages/${garageId}`, {
+    headers: {
+      'Accept': 'application/json',
+      ...window.getApiAuthHeaders()
+    }
+  })
     .then(res => res.json())
     .then(data => {
       if (!data || !data.garage) {

@@ -2,12 +2,12 @@ module Api
   module V1 
     class CarsController < ApplicationController
       skip_before_action :verify_authenticity_token
-      before_action :authenticate_user!
+      before_action :doorkeeper_authorize!
       before_action :set_car, only: [:show, :update, :destroy]
 
       # GET /cars or /cars.json
       def index
-        cars = current_user.cars
+        cars = current_resource_owner.cars
         render json: cars.as_json(
           include: {
             vehicle_brand: { only: [:id, :name] }
@@ -32,12 +32,12 @@ module Api
         @car = Car.new
         render json: {
           car: @car,
-          current_user: { id: current_user.id, name: current_user.name }
+          current_user: { id: current_resource_owner.id, name: current_resource_owner.name }
         }, status: :ok
       end
 
       def create
-        @car = current_user.cars.build(car_params)
+        @car = current_resource_owner.cars.build(car_params)
         @car.make = @car.vehicle_brand.name if @car.vehicle_brand
         
         begin
@@ -80,7 +80,7 @@ module Api
       private
       def set_car
         begin
-          @car = current_user.cars.find(params[:id])
+          @car = current_resource_owner.cars.find(params[:id])
         rescue ActiveRecord::RecordNotFound
           render json: { error: 'Car not found' }, status: :not_found
         end
@@ -90,6 +90,10 @@ module Api
         params.require(:car).permit(
           :model, :year, :registration_number, :vehicle_brand_id
         )
+      end
+
+      def current_resource_owner
+        User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
       end
     end
   end

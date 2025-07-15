@@ -2,17 +2,17 @@ module Api
   module V1
     class GaragesController < ApplicationController
       skip_before_action :verify_authenticity_token
-      before_action :authenticate_user!
+      before_action :doorkeeper_authorize!
 
       def index
-        @garages = [current_user.service_center]
+        @garages = [current_resource_owner.service_center]
         render json: @garages.as_json(
           methods: [:bookings_count]
         ), status: :ok
       end
 
       def show
-        @garage = current_user.service_center
+        @garage = current_resource_owner.service_center
         @bookings = @garage.bookings.includes(:car).order(service_date: :asc)
         render json: { 
           garage: @garage, 
@@ -27,6 +27,11 @@ module Api
             }
           )
         }, status: :ok
+      end
+
+      private
+      def current_resource_owner
+        User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
       end
     end
   end

@@ -14,7 +14,12 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
-  fetch(`/api/v1/cars/${carId}`)
+  fetch(`/api/v1/cars/${carId}`, {
+    headers: {
+      'Accept': 'application/json',
+      ...window.getApiAuthHeaders()
+    }
+  })
     .then(res => res.json())
     .then(car => {
       details.innerHTML = renderCarCard(car);

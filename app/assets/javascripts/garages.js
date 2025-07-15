@@ -4,7 +4,12 @@ document.addEventListener('DOMContentLoaded', function() {
   const container = document.getElementById('garages-list');
   if (!container) return;
 
-  fetch('/api/v1/garages')
+  fetch('/api/v1/garages', {
+    headers: {
+      'Accept': 'application/json',
+      ...window.getApiAuthHeaders()
+    }
+  })
     .then(res => res.json())
     .then(data => {
       if (!Array.isArray(data)) {
