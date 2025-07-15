@@ -70,6 +70,7 @@
             if (logoutButton) {
               logoutButton.addEventListener('submit', function() {
                 sessionStorage.removeItem('access_token');
+                localStorage.removeItem('access_token')
               });
             }
           });
