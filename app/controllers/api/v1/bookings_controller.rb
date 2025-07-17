@@ -75,7 +75,7 @@ module Api
             render json: @booking, status: :created
           rescue ActiveRecord::RecordInvalid => e
             Rails.logger.error "Booking creation failed: #{e.message}"
-            render json: { error: 'Booking could not be created.' }, status: :unprocessable
+            render json: { error: 'Booking could not be created.' }, status: :unprocessable_entity
           end
         rescue StandardError => e
           Rails.logger.warn "No compatible service center found for booking: #{e.message}"

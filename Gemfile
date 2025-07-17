@@ -81,3 +81,21 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+group :development, :test do
+  gem "rspec-rails"
+  gem "factory_bot_rails"
+end
+
+group :development, :test do
+  gem "faker"
+end
+
+group :test do
+  gem 'simplecov', require: false
+end
+
+# Gemfile
+group :test do
+  gem 'rails-controller-testing'
+end
