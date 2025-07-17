@@ -90,3 +90,12 @@ end
 group :development, :test do
   gem "faker"
 end
+
+group :test do
+  gem 'simplecov', require: false
+end
+
+# Gemfile
+group :test do
+  gem 'rails-controller-testing'
+end
