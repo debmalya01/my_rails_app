@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_15_042128) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_18_044109) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -40,15 +40,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_042128) do
     t.index ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true
   end
 
-  create_table "booking_services", force: :cascade do |t|
-    t.bigint "booking_id", null: false
-    t.bigint "service_type_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["booking_id"], name: "index_booking_services_on_booking_id"
-    t.index ["service_type_id"], name: "index_booking_services_on_service_type_id"
-  end
-
   create_table "bookings", force: :cascade do |t|
     t.bigint "car_id", null: false
     t.date "service_date"
@@ -62,6 +53,13 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_042128) do
     t.index ["car_id"], name: "index_bookings_on_car_id"
     t.index ["service_center_id"], name: "index_bookings_on_service_center_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
+  end
+
+  create_table "bookings_service_types", id: false, force: :cascade do |t|
+    t.bigint "booking_id", null: false
+    t.bigint "service_type_id", null: false
+    t.index ["booking_id"], name: "index_bookings_service_types_on_booking_id"
+    t.index ["service_type_id"], name: "index_bookings_service_types_on_service_type_id"
   end
 
   create_table "cars", force: :cascade do |t|
@@ -188,8 +186,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_15_042128) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "booking_services", "bookings"
-  add_foreign_key "booking_services", "service_types"
   add_foreign_key "bookings", "cars"
   add_foreign_key "bookings", "service_centers"
   add_foreign_key "bookings", "users"

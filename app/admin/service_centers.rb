@@ -51,12 +51,14 @@ ActiveAdmin.register ServiceCenter do
       row :max_capacity_per_day
       row :license_number
     end
-
-    panel "Bookings" do
-      table_for service_center.bookings do
-        column :id
-        column :service_date
-        column :status
+    
+    if service_center.bookings.any?
+      panel "Bookings" do
+        table_for service_center.bookings do
+          column :id
+          column :service_date
+          column :status
+        end
       end
     end
   end
