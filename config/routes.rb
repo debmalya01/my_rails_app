@@ -25,6 +25,8 @@ Rails.application.routes.draw do
         resources :invoices, only: [:show]
       end
     end
+    
+
   end
 
 
@@ -42,6 +44,7 @@ Rails.application.routes.draw do
           resources :invoices, only: [:show]
         end
       end
+      resource :garage_vehicle_brands, only: [:show, :update], path: 'garage-vehicle-brands'
       resources :service_types, only: [:index, :show]
       resources :vehicle_brands, only: [:index]
       resources :users, only: [:show, :update]

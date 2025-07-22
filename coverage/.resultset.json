@@ -701,6 +701,64 @@
         ],
         "branches": {}
       },
+      "/home/rently-coimbatore/my_rails_app/app/controllers/garage_vehicle_brands_controller.rb": {
+        "lines": [
+          1,
+          1,
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          null,
+          0,
+          0,
+          null,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          1,
+          null,
+          1,
+          0,
+          0,
+          null,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null
+        ],
+        "branches": {
+          "[:unless, 0, 33, 4, 35, 7]": {
+            "[:else, 1, 33, 4, 35, 7]": 0,
+            "[:then, 2, 34, 6, 34, 52]": 0
+          },
+          "[:unless, 3, 40, 4, 42, 7]": {
+            "[:else, 4, 40, 4, 42, 7]": 0,
+            "[:then, 5, 41, 6, 41, 63]": 0
+          }
+        }
+      },
       "/home/rently-coimbatore/my_rails_app/app/models/document.rb": {
         "lines": [
           1,
@@ -1676,9 +1734,13 @@
           null,
           null,
           null,
-          null,
-          null,
-          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
           null,
           null,
           null,
@@ -1777,6 +1839,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1753179448
+    "timestamp": 1753181202
   }
 }
