@@ -27,8 +27,6 @@ module Api
               invoice: { only: [:id, :amount, :status, :issued_at] }
             }
           ), status: :ok
-        else
-          render json: { error: 'Booking not found' }, status: :not_found
         end
       end
 
@@ -115,6 +113,9 @@ module Api
       private
       def set_booking
         @booking = current_resource_owner.bookings.find(params[:id])
+
+        return render json: { error: 'Booking not found' }, status: :not_found if @booking.nil?
+        return render json: { error: 'You are not authorized to access this booking.'}, status: :forbidden if @booking.user_id != current_resource_owner.id
       end
 
       def booking_params

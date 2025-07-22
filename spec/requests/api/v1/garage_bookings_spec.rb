@@ -56,4 +56,22 @@ RSpec.describe "Api::V1::GarageBookingsController", type: :request do
       expect(json["error"]).to eq("Booking status could not be updated.")
     end
   end
+
+  describe "GET /api/v1/garages/:id/bookings" do
+    it "returns paginated bookings with meta" do
+      FactoryBot.create_list(:booking, 7, service_center: service_center)
+      get "/api/v1/garages/#{service_center.id}/bookings", headers: headers
+      json = JSON.parse(response.body)
+      expect(json["bookings"].size).to be <= 5 # default per_page
+      expect(json["meta"]).to include("current_page", "total_pages", "total_count")
+    end
+
+    it "filters bookings by status" do
+      FactoryBot.create(:booking, service_center: service_center, status: "pending")
+      FactoryBot.create(:booking, service_center: service_center, status: "in_service")
+      get "/api/v1/garages/#{service_center.id}/bookings?q[status_eq]=pending", headers: headers
+      json = JSON.parse(response.body)
+      expect(json["bookings"].all? { |b| b["status"] == "pending" }).to be true
+    end
+  end
 end

@@ -17,56 +17,49 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/helpers/application_helper.rb": {
         "lines": [
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/helpers/bookings_helper.rb": {
         "lines": [
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/helpers/cars_helper.rb": {
         "lines": [
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/helpers/garage_booking_helper.rb": {
         "lines": [
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/helpers/garages_helper.rb": {
         "lines": [
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/helpers/home_helper.rb": {
         "lines": [
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/admin_user.rb": {
         "lines": [
@@ -81,8 +74,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/application_record.rb": {
         "lines": [
@@ -90,8 +82,7 @@
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/admin/admin_users.rb": {
         "lines": [
@@ -124,8 +115,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/admin/bookings.rb": {
         "lines": [
@@ -146,10 +136,16 @@
           null,
           null,
           null,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
+          1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/booking.rb": {
         "lines": [
@@ -182,7 +178,7 @@
           null,
           null,
           1,
-          0,
+          9,
           null,
           null,
           1,
@@ -191,13 +187,13 @@
           null,
           1,
           1,
-          34,
+          45,
           1,
           null,
           null,
           null,
           1,
-          24,
+          35,
           null,
           null,
           null,
@@ -205,14 +201,14 @@
           null,
           null,
           1,
-          52,
+          74,
           null,
           null
         ],
         "branches": {
           "[:if, 0, 39, 4, 41, 7]": {
             "[:then, 1, 40, 6, 40, 55]": 1,
-            "[:else, 2, 39, 4, 41, 7]": 33
+            "[:else, 2, 39, 4, 41, 7]": 44
           }
         }
       },
@@ -234,10 +230,80 @@
           null,
           null,
           null,
+          1,
+          1,
+          1,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          null,
+          null,
+          1,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
+          0,
+          null,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          null,
+          null,
+          null,
           null,
           null
         ],
         "branches": {
+          "[:if, 0, 51, 8, 51, 43]": {
+            "[:then, 1, 51, 8, 51, 26]": 0,
+            "[:else, 2, 51, 8, 51, 43]": 0
+          },
+          "[:if, 3, 55, 4, 69, 7]": {
+            "[:then, 4, 57, 6, 68, 9]": 0,
+            "[:else, 5, 55, 4, 69, 7]": 0
+          },
+          "[:if, 6, 58, 8, 67, 32]": {
+            "[:then, 7, 58, 8, 67, 11]": 0,
+            "[:else, 8, 58, 8, 67, 32]": 0
+          },
+          "[:if, 9, 63, 12, 63, 65]": {
+            "[:then, 10, 63, 12, 63, 39]": 0,
+            "[:else, 11, 63, 12, 63, 65]": 0
+          }
         }
       },
       "/home/rently-coimbatore/my_rails_app/app/models/car.rb": {
@@ -268,7 +334,7 @@
           null,
           1,
           1,
-          44,
+          64,
           null,
           null,
           null,
@@ -277,8 +343,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/admin/dashboard.rb": {
         "lines": [
@@ -316,8 +381,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/admin/service_centers.rb": {
         "lines": [
@@ -424,7 +488,7 @@
           null,
           1,
           1,
-          22,
+          24,
           null,
           null,
           null,
@@ -434,8 +498,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/admin/users.rb": {
         "lines": [
@@ -538,8 +601,7 @@
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/cars_controller.rb": {
         "lines": [
@@ -607,7 +669,7 @@
           1,
           null,
           1,
-          4,
+          3,
           null,
           null,
           null,
@@ -637,8 +699,7 @@
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/document.rb": {
         "lines": [
@@ -652,8 +713,7 @@
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/invoice.rb": {
         "lines": [
@@ -664,8 +724,7 @@
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/api/v1/bookings_controller.rb": {
         "lines": [
@@ -698,8 +757,6 @@
           null,
           null,
           null,
-          null,
-          0,
           null,
           null,
           null,
@@ -787,34 +844,45 @@
           1,
           8,
           null,
+          5,
+          5,
+          null,
           null,
           1,
           5,
           null,
           null,
           1,
-          10,
+          15,
           null,
           null,
           null,
           null
         ],
         "branches": {
-          "[:if, 0, 21, 8, 32, 11]": {
+          "[:if, 0, 21, 8, 30, 11]": {
             "[:then, 1, 22, 10, 29, 24]": 1,
-            "[:else, 2, 31, 10, 31, 73]": 0
+            "[:else, 2, 21, 8, 30, 11]": 0
           },
-          "[:if, 3, 53, 8, 58, 11]": {
-            "[:then, 4, 54, 10, 55, 21]": 2,
-            "[:else, 5, 57, 17, 57, 22]": 1
+          "[:if, 3, 51, 8, 56, 11]": {
+            "[:then, 4, 52, 10, 53, 21]": 2,
+            "[:else, 5, 55, 17, 55, 22]": 1
           },
-          "[:if, 6, 88, 8, 100, 11]": {
-            "[:then, 7, 90, 12, 95, 91]": 1,
-            "[:else, 8, 98, 10, 99, 145]": 1
+          "[:if, 6, 86, 8, 98, 11]": {
+            "[:then, 7, 88, 12, 93, 91]": 1,
+            "[:else, 8, 96, 10, 97, 145]": 1
           },
-          "[:if, 9, 125, 8, 125, 73]": {
-            "[:then, 10, 125, 8, 125, 53]": 10,
-            "[:else, 11, 125, 8, 125, 73]": 0
+          "[:if, 9, 117, 8, 117, 95]": {
+            "[:then, 10, 117, 8, 117, 78]": 0,
+            "[:else, 11, 117, 8, 117, 95]": 5
+          },
+          "[:if, 12, 118, 8, 118, 155]": {
+            "[:then, 13, 118, 15, 118, 106]": 0,
+            "[:else, 14, 118, 8, 118, 155]": 5
+          },
+          "[:if, 15, 126, 8, 126, 73]": {
+            "[:then, 16, 126, 8, 126, 53]": 15,
+            "[:else, 17, 126, 8, 126, 73]": 0
           }
         }
       },
@@ -831,6 +899,14 @@
           1,
           1,
           1,
+          1,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null,
@@ -901,34 +977,41 @@
           null,
           1,
           1,
+          6,
           null,
-          5,
+          6,
+          4,
           null,
+          null,
+          1,
           2,
           null,
           null,
           null,
-          1,
-          2,
-          null,
-          null,
-          null,
           null,
           1,
-          9,
+          8,
           null,
           null,
           null,
           null
         ],
         "branches": {
-          "[:if, 0, 41, 8, 41, 65]": {
-            "[:then, 1, 41, 8, 41, 43]": 1,
-            "[:else, 2, 41, 8, 41, 65]": 0
+          "[:if, 0, 49, 8, 49, 65]": {
+            "[:then, 1, 49, 8, 49, 43]": 1,
+            "[:else, 2, 49, 8, 49, 65]": 0
           },
-          "[:if, 3, 96, 8, 96, 73]": {
-            "[:then, 4, 96, 8, 96, 53]": 9,
-            "[:else, 5, 96, 8, 96, 73]": 0
+          "[:if, 3, 92, 8, 92, 87]": {
+            "[:then, 4, 92, 8, 92, 74]": 2,
+            "[:else, 5, 92, 8, 92, 87]": 4
+          },
+          "[:if, 6, 93, 8, 93, 148]": {
+            "[:then, 7, 93, 15, 93, 103]": 1,
+            "[:else, 8, 93, 8, 93, 148]": 3
+          },
+          "[:if, 9, 103, 8, 103, 73]": {
+            "[:then, 10, 103, 8, 103, 53]": 8,
+            "[:else, 11, 103, 8, 103, 73]": 0
           }
         }
       },
@@ -949,6 +1032,7 @@
           null,
           1,
           2,
+          null,
           2,
           2,
           null,
@@ -975,9 +1059,9 @@
           null
         ],
         "branches": {
-          "[:if, 0, 34, 8, 34, 73]": {
-            "[:then, 1, 34, 8, 34, 53]": 3,
-            "[:else, 2, 34, 8, 34, 73]": 0
+          "[:if, 0, 35, 8, 35, 73]": {
+            "[:then, 1, 35, 8, 35, 53]": 3,
+            "[:else, 2, 35, 8, 35, 73]": 0
           }
         }
       },
@@ -996,8 +1080,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/api/v1/vehicle_brands_controller.rb": {
         "lines": [
@@ -1014,8 +1097,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/car_owner.rb": {
         "lines": [
@@ -1029,8 +1111,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/vehicle_brand.rb": {
         "lines": [
@@ -1045,8 +1126,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/garage_admin.rb": {
         "lines": [
@@ -1057,8 +1137,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/service_type.rb": {
         "lines": [
@@ -1069,8 +1148,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/models/service_center_brand.rb": {
         "lines": [
@@ -1079,8 +1157,7 @@
           1,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/services/center_matching_service.rb": {
         "lines": [
@@ -1110,8 +1187,7 @@
           null,
           null
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/api/v1/garage_bookings_controller.rb": {
         "lines": [
@@ -1124,8 +1200,18 @@
           1,
           null,
           1,
-          0,
-          0,
+          2,
+          null,
+          2,
+          1,
+          null,
+          2,
+          2,
+          null,
+          null,
+          null,
+          null,
+          null,
           null,
           null,
           null,
@@ -1155,7 +1241,11 @@
           null,
           1,
           1,
-          3,
+          5,
+          5,
+          0,
+          null,
+          null,
           null,
           null,
           1,
@@ -1167,16 +1257,24 @@
           null,
           null,
           1,
-          3,
+          5,
           null,
           null,
           null,
           null
         ],
         "branches": {
-          "[:if, 0, 53, 8, 53, 73]": {
-            "[:then, 1, 53, 8, 53, 53]": 3,
-            "[:else, 2, 53, 8, 53, 73]": 0
+          "[:if, 0, 12, 8, 14, 11]": {
+            "[:then, 1, 13, 10, 13, 39]": 1,
+            "[:else, 2, 12, 8, 14, 11]": 1
+          },
+          "[:if, 3, 52, 8, 54, 11]": {
+            "[:then, 4, 53, 10, 53, 101]": 0,
+            "[:else, 5, 52, 8, 54, 11]": 5
+          },
+          "[:if, 6, 67, 8, 67, 73]": {
+            "[:then, 7, 67, 8, 67, 53]": 5,
+            "[:else, 8, 67, 8, 67, 73]": 0
           }
         }
       },
@@ -1187,8 +1285,7 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/channels/application_cable/connection.rb": {
         "lines": [
@@ -1197,8 +1294,25 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
+      },
+      "/home/rently-coimbatore/my_rails_app/app/controllers/api/v1/home_controller.rb": {
+        "lines": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          null,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/bookings_controller.rb": {
         "lines": [
@@ -1306,8 +1420,7 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/garage_bookings_controller.rb": {
         "lines": [
@@ -1347,8 +1460,7 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/garages_controller.rb": {
         "lines": [
@@ -1364,8 +1476,7 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/home_controller.rb": {
         "lines": [
@@ -1378,8 +1489,7 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/users/confirmations_controller.rb": {
         "lines": [
@@ -1414,8 +1524,7 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/users/omniauth_callbacks_controller.rb": {
         "lines": [
@@ -1450,8 +1559,7 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/users/passwords_controller.rb": {
         "lines": [
@@ -1490,8 +1598,7 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/users/registrations_controller.rb": {
         "lines": [
@@ -1579,8 +1686,7 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/users/sessions_controller.rb": {
         "lines": [
@@ -1612,8 +1718,7 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/controllers/users/unlocks_controller.rb": {
         "lines": [
@@ -1648,8 +1753,7 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/jobs/application_job.rb": {
         "lines": [
@@ -1661,8 +1765,7 @@
           null,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       },
       "/home/rently-coimbatore/my_rails_app/app/mailers/application_mailer.rb": {
         "lines": [
@@ -1671,10 +1774,9 @@
           0,
           0
         ],
-        "branches": {
-        }
+        "branches": {}
       }
     },
-    "timestamp": 1752813709
+    "timestamp": 1753179448
   }
 }

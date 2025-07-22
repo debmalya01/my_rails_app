@@ -5,6 +5,9 @@ RSpec.describe Api::V1::CarsController, type: :request do
   let(:user) { FactoryBot.create(:car_owner) }
   let(:vehicle_brand) { FactoryBot.create(:vehicle_brand) }
   let!(:car) { FactoryBot.create(:car, car_owner: user, vehicle_brand: vehicle_brand) }
+  let!(:other_user) { FactoryBot.create(:car_owner) }
+  let!(:other_car) { FactoryBot.create(:car, car_owner: other_user, vehicle_brand: vehicle_brand) }
+
 
   let(:access_token) { create_access_token_for(user) }
 
@@ -20,7 +23,8 @@ RSpec.describe Api::V1::CarsController, type: :request do
       get "/api/v1/cars", headers: headers 
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
-      expect(json.first['id']).to eq(car.id)
+      cars = json['cars']
+      expect(cars.first['id']).to eq(car.id)
     end
   end
 
@@ -30,9 +34,16 @@ RSpec.describe Api::V1::CarsController, type: :request do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'returns a 404 if the car does not exist' do
-      get "/api/v1/cars/9999", headers: headers
+    it 'returns 404 if the car does not exist' do
+      get "/api/v1/cars/999999", headers: headers
       expect(response).to have_http_status(:not_found)
+      expect(JSON.parse(response.body)['error']).to eq('Car not found')
+    end
+
+    it 'returns 403 if the car belongs to another user' do
+      get "/api/v1/cars/#{other_car.id}", headers: headers
+      expect(response).to have_http_status(:forbidden)
+      expect(JSON.parse(response.body)['error']).to eq('You are not authorized to access this car.')
     end
   end
 

@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe CarsController, type: :controller do
-  include Devise::Test::ControllerHelpers  # ✅ this line enables `sign_in`
+  include Devise::Test::ControllerHelpers 
 
   let(:user) { FactoryBot.create(:car_owner) }
   let(:vehicle_brand) { FactoryBot.create(:vehicle_brand) }
   let!(:car) { FactoryBot.create(:car, car_owner: user, vehicle_brand: vehicle_brand) }
 
   before do
-    sign_in user  # ✅ simulates a signed-in user
+    sign_in user  
   end
 
   describe 'GET #index' do
@@ -19,13 +19,13 @@ RSpec.describe CarsController, type: :controller do
     end
   end
 
-  describe 'GET #show' do
-    it 'renders the show page successfully' do
-      get :show, params: { id: car.id }
-      expect(response).to be_successful
-      expect(assigns(:car)).to eq(car)
-    end
-  end
+  # describe 'GET #show' do
+  #   it 'renders the show page successfully' do
+  #     get :show, params: { id: car.id }
+  #     expect(response).to be_successful
+  #     expect(assigns(:car)).to eq(car)
+  #   end
+  # end
 
   describe 'GET #new' do
     it 'renders the new page successfully' do

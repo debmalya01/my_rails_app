@@ -19,16 +19,33 @@ document.addEventListener('DOMContentLoaded', function() {
       ...window.getApiAuthHeaders()
     }
   })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) {
+        if (res.status === 403) {
+          throw new Error('403');
+        } else if (res.status === 404) {
+          throw new Error('404');
+        } else {
+          throw new Error('unknown');
+        }
+      }
+      return res.json();
+    })
     .then(booking => {
-      // Store booking data globally for delete function
       window.currentBookingData = booking;
       details.innerHTML = renderBookingCard(booking);
       actions.innerHTML = renderBookingActions(booking);
     })
-    .catch(() => {
-      details.innerHTML = '<div class="alert alert-danger">Failed to load booking.</div>';
+    .catch(error => {
+      if (error.message === '403') {
+        details.innerHTML = '<div class="alert alert-warning">⛔ You are not authorized to view this booking.</div>';
+      } else if (error.message === '404') {
+        details.innerHTML = '<div class="alert alert-danger">🚫 Booking not found.</div>';
+      } else {
+        details.innerHTML = '<div class="alert alert-danger">⚠️ Failed to load booking due to an unknown error.</div>';
+      }
     });
+
 });
 
 function renderBookingCard(booking) {
@@ -130,22 +147,33 @@ function deleteBooking(bookingId) {
       ...window.getApiAuthHeaders()
     }
   })
-  .then(res => res.json())
-  .then(data => {
-    if (data.error) {
-      alert('Error: ' + data.error);
-    } else {
-      alert('Booking deleted successfully!');
-      // Always redirect to the car page
-      if (carId) {
-        window.location.href = `/cars/${carId}`;
+  .then(res => {
+    if (!res.ok) {
+      if (res.status === 403) {
+        throw new Error('403');
+      } else if (res.status === 404) {
+        throw new Error('404');
       } else {
-        // Fallback to bookings if car info is not available
-        window.location.href = '/bookings';
+        throw new Error('unknown');
       }
     }
+    return res.json();
   })
-  .catch(() => {
-    alert('Failed to delete booking.');
+  .then(data => {
+    alert('Booking deleted successfully!');
+    if (carId) {
+      window.location.href = `/cars/${carId}`;
+    } else {
+      window.location.href = '/bookings';
+    }
+  })
+  .catch(error => {
+    if (error.message === '403') {
+      alert('You are not authorized to delete this booking.');
+    } else if (error.message === '404') {
+      alert('Booking not found.');
+    } else {
+      alert('Failed to delete booking.');
+    }
   });
 } 

@@ -31,6 +31,9 @@ Rails.application.routes.draw do
   # API routes
   namespace :api do
     namespace :v1 do 
+      get 'home', to: 'home#index'
+      get 'about', to: 'home#about'
+      
       resources :cars do
         resources :bookings, shallow: true
       end

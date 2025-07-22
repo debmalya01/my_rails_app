@@ -14,24 +14,42 @@ document.addEventListener('DOMContentLoaded', function() {
     return;
   }
 
+  details.innerHTML = '<div class="text-center"><i class="fas fa-spinner fa-spin"></i> Loading car details...</div>';
+
   fetch(`/api/v1/cars/${carId}`, {
     headers: {
       'Accept': 'application/json',
       ...window.getApiAuthHeaders()
     }
   })
-    .then(res => res.json())
+    .then(res => {
+      if (!res.ok) throw res;
+      return res.json();
+    })
     .then(car => {
       details.innerHTML = renderCarCard(car);
       bookingsList.innerHTML = renderCarBookings(car.bookings || [], carId);
       actions.innerHTML = `<a href="/cars" class="btn btn-link mt-4">Back to Cars</a>`;
     })
-    .catch(() => {
-      details.innerHTML = '<div class="alert alert-danger">Failed to load car.</div>';
+    .catch(async err => {
+      let errorMessage = 'Failed to load car.';
+      if (err.status === 404) {
+        errorMessage = 'Car not found.';
+      } else if (err.status === 403) {
+        errorMessage = 'You are not authorized to view this car.';
+      } else if (err.json) {
+        const data = await err.json();
+        errorMessage = data.error || errorMessage;
+      }
+
+      details.innerHTML = `<div class="alert alert-danger">${errorMessage}</div>`;
     });
+
 });
 
 function renderCarCard(car) {
+  if (!car) return '<div class="alert alert-danger">Car details missing.</div>';
+
   return `
     <div class="card h-100 shadow-sm">
       <div class="card-body">
@@ -41,6 +59,7 @@ function renderCarCard(car) {
     </div>
   `;
 }
+
 
 function renderCarBookings(bookings, carId) {
   const bookingsHtml = bookings.length > 0 ? `

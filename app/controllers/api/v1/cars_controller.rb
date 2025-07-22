@@ -7,12 +7,20 @@ module Api
 
       # GET /cars or /cars.json
       def index
-        cars = current_resource_owner.cars
-        render json: cars.as_json(
-          include: {
-            vehicle_brand: { only: [:id, :name] }
+        q = current_resource_owner.cars.ransack(params[:q])
+        cars = q.result.page(params[:page]).per(params[:per_page] || 5)
+        render json: {
+          cars: cars.as_json(
+            include: {
+              vehicle_brand: { only: [:id, :name] }
+            }
+          ),
+          meta: {
+            current_page: cars.current_page,
+            total_pages: cars.total_pages,
+            total_count: cars.total_count
           }
-        ), status: :ok
+        }, status: :ok
       end
 
       def show
@@ -79,11 +87,10 @@ module Api
 
       private
       def set_car
-        begin
-          @car = current_resource_owner.cars.find(params[:id])
-        rescue ActiveRecord::RecordNotFound
-          render json: { error: 'Car not found' }, status: :not_found
-        end
+        @car = Car.find_by(id: params[:id])
+
+        return render json: { error: 'Car not found' }, status: :not_found if @car.nil?
+        return render json: { error: 'You are not authorized to access this car.' }, status: :forbidden if @car.user_id != current_resource_owner.id
       end
 
       def car_params

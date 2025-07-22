@@ -13,6 +13,7 @@ module Api
 
       def show
         @garage = current_resource_owner.service_center
+
         @bookings = @garage.bookings.includes(:car).order(service_date: :asc)
         render json: { 
           garage: @garage, 
