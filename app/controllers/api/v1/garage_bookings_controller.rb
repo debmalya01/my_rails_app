@@ -8,7 +8,7 @@ module Api
 
       def index
         q = @garage.bookings.ransack(params[:q])
-        # Only allow filtering by status (and other safe fields if needed)
+        # Only allow filtering by status
         if params[:q]
           params[:q].slice!(:status_eq)
         end

@@ -11,8 +11,8 @@ module Api
           include: {
             car: { only: [:id, :make, :model, :year] },
             service_center: { only: [:id, :garage_name, :phone] },
-            service_types: { only: [:id, :name, :base_price] },
-            invoice: { only: [:id, :amount, :status, :issued_at] }
+            # service_types: { only: [:id, :name, :base_price] },
+            # invoice: { only: [:id, :amount, :status, :issued_at] }
           }
         ), status: :ok
       end
@@ -102,7 +102,7 @@ module Api
         begin
           @booking.destroy!
           Rails.logger.info "Booking destroyed successfully"
-          render json: { message: 'Booking was successfully destroyed.' }, status: :see_other
+          head :no_content
         rescue ActiveRecord::RecordNotDestroyed => e
           Rails.logger.error "Booking deletion failed: #{e.message}"
           render json: { error: 'Booking could not be deleted.' }, status: :unprocessable_entity

@@ -1,7 +1,7 @@
 # Combined factories from all files in spec/factories
 
 FactoryBot.define do
-  # users.rb
+  
   factory :user do
     name { "Test User" }
     email { Faker::Internet.unique.email }

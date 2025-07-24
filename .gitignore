@@ -36,4 +36,4 @@
 
 
 # Ignore coverage reports.
-coverage/
+/coverage/

@@ -149,15 +149,11 @@ function deleteBooking(bookingId) {
   })
   .then(res => {
     if (!res.ok) {
-      if (res.status === 403) {
-        throw new Error('403');
-      } else if (res.status === 404) {
-        throw new Error('404');
-      } else {
-        throw new Error('unknown');
-      }
+      if (res.status === 403) throw new Error('403');
+      else if (res.status === 404) throw new Error('404');
+      else throw new Error('unknown');
     }
-    return res.json();
+    return res.text().then(text => text ? JSON.parse(text) : {});
   })
   .then(data => {
     alert('Booking deleted successfully!');

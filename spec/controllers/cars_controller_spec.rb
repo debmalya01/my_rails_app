@@ -19,13 +19,7 @@ RSpec.describe CarsController, type: :controller do
     end
   end
 
-  # describe 'GET #show' do
-  #   it 'renders the show page successfully' do
-  #     get :show, params: { id: car.id }
-  #     expect(response).to be_successful
-  #     expect(assigns(:car)).to eq(car)
-  #   end
-  # end
+  
 
   describe 'GET #new' do
     it 'renders the new page successfully' do
