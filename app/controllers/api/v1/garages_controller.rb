@@ -13,23 +13,23 @@ module Api
       end
 
       def show
-        @garage = current_resource_owner.service_center
+        # @garage = current_resource_owner.service_center
 
-        @bookings = @garage.bookings.includes(:car).order(service_date: :asc)
-        LogBroadcaster.log("Showing garage details for garage ID #{@garage.id} with #{@bookings.size} bookings", level: :info)
-        render json: { 
-          garage: @garage, 
-          bookings: @bookings.as_json(
-            include: {
-              car: { 
-                only: [:id, :make, :model, :year],
-                include: {
-                  vehicle_brand: { only: [:id, :name] }
-                }
-              }
-            }
-          )
-        }, status: :ok
+        # @bookings = @garage.bookings.includes(:car).order(service_date: :asc)
+        # LogBroadcaster.log("Showing garage details for garage ID #{@garage.id} with #{@bookings.size} bookings", level: :info)
+        # render json: { 
+        #   garage: @garage, 
+        #   bookings: @bookings.as_json(
+        #     include: {
+        #       car: { 
+        #         only: [:id, :make, :model, :year],
+        #         include: {
+        #           vehicle_brand: { only: [:id, :name] }
+        #         }
+        #       }
+        #     }
+        #   )
+        # }, status: :ok
       end
 
       private

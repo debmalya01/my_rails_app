@@ -12,21 +12,22 @@ module Api
         if params[:q]
           params[:q].slice!(:status_eq)
         end
-        bookings = q.result.page(params[:page]).per(params[:per_page] || 5)
-        LogBroadcaster.log("Fetched #{bookings.size} bookings for garage ID #{@garage.id} - page #{bookings.current_page}", level: :info)
-        render json: { 
-          garage: @garage, 
-          bookings: bookings.as_json(
-            include: {
-              car: { only: [:id, :make, :model, :year] }
-            }
-          ),
-          meta: {
-            current_page: bookings.current_page,
-            total_pages: bookings.total_pages,
-            total_count: bookings.total_count
-          }
-        }, status: :ok
+        @bookings = q.result.page(params[:page]).per(params[:per_page] || 5)
+        LogBroadcaster.log("Fetched #{@bookings.size} bookings for garage ID #{@garage.id} - page #{@bookings.current_page}", level: :info)
+        # render json: { 
+        #   garage: @garage, 
+        #   bookings: bookings.as_json(
+        #     include: {
+        #       car: { only: [:id, :make, :model, :year] }
+        #     }
+        #   ),
+        #   meta: {
+        #     current_page: bookings.current_page,
+        #     total_pages: bookings.total_pages,
+        #     total_count: bookings.total_count
+        #   }
+        # }, status: :ok
+        render 'api/v1/garage_bookings/index', formats: [:json], status: :ok
       end
 
       def edit

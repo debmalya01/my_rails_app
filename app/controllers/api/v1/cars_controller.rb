@@ -8,34 +8,37 @@ module Api
       # GET /cars or /cars.json
       def index
         q = current_resource_owner.cars.ransack(params[:q])
-        cars = q.result.page(params[:page]).per(params[:per_page] || 5)
-        LogBroadcaster.log("Fetched #{cars.size} cars for user #{current_resource_owner.id} - page #{cars.current_page}", level: :info)
-        render json: {
-          cars: cars.as_json(
-            include: {
-              vehicle_brand: { only: [:id, :name] }
-            }
-          ),
-          meta: {
-            current_page: cars.current_page,
-            total_pages: cars.total_pages,
-            total_count: cars.total_count
-          }
-        }, status: :ok
+        @cars = q.result.page(params[:page]).per(params[:per_page] || 5)
+        LogBroadcaster.log("Fetched #{@cars.size} cars for user #{current_resource_owner.id} - page #{@cars.current_page}", level: :info)
+        # render json: {
+        #   cars: cars.as_json(
+        #     include: {
+        #       vehicle_brand: { only: [:id, :name] }
+        #     }
+        #   ),
+        #   meta: {
+        #     current_page: cars.current_page,
+        #     total_pages: cars.total_pages,
+        #     total_count: cars.total_count
+        #   }
+        # }, status: :ok
+
+        render 'api/v1/cars/index', formats: [:json], status: :ok
       end
 
       def show
         LogBroadcaster.log("Showing car details for car ID #{@car.id}", level: :info)
-        render json: @car.as_json(
-          include: {
-            bookings: {
-              only: [:id, :service_date, :notes, :status],
-              include: {
-                service_center: { only: [:garage_name] }
-              }
-            }
-          }
-        ), status: :ok
+        # render json: @car.as_json(
+        #   include: {
+        #     bookings: {
+        #       only: [:id, :service_date, :notes, :status],
+        #       include: {
+        #         service_center: { only: [:garage_name] }
+        #       }
+        #     }
+        #   }
+        # ), status: :ok
+        render 'api/v1/cars/show', formats: [:json], status: :ok
       end
 
       def new
