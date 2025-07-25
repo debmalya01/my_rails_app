@@ -5,6 +5,7 @@ module Api
 
       def index
         @vehicle_brands = VehicleBrand.all
+        LogBroadcaster.log("Fetched #{@vehicle_brands.size} vehicle brands", level: :info)
         render json: @vehicle_brands, status: :ok
       end
     end

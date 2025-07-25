@@ -9,6 +9,7 @@ module Api
       def index
         q = current_resource_owner.cars.ransack(params[:q])
         cars = q.result.page(params[:page]).per(params[:per_page] || 5)
+        LogBroadcaster.log("Fetched #{cars.size} cars for user #{current_resource_owner.id} - page #{cars.current_page}", level: :info)
         render json: {
           cars: cars.as_json(
             include: {
@@ -24,6 +25,7 @@ module Api
       end
 
       def show
+        LogBroadcaster.log("Showing car details for car ID #{@car.id}", level: :info)
         render json: @car.as_json(
           include: {
             bookings: {
@@ -37,6 +39,7 @@ module Api
       end
 
       def new
+        LogBroadcaster.log("Creating a new car for user #{current_resource_owner.id}", level: :info)
         @car = Car.new
         render json: {
           car: @car,
@@ -47,17 +50,20 @@ module Api
       def create
         @car = current_resource_owner.cars.build(car_params)
         @car.make = @car.vehicle_brand.name if @car.vehicle_brand
-        
+        LogBroadcaster.log("Attempting to create a new car for user #{current_resource_owner.id}", level: :info)
         begin
           @car.save!
+          LogBroadcaster.log("Car created successfully with ID #{@car.id}", level: :info)
           render json:@car, status: :created
         rescue ActiveRecord::RecordInvalid => e
           Rails.logger.error "Car creation failed: #{e.message}"
+          LogBroadcaster.log("Car creation failed: #{e.message}", level: :error)
           render json: { error: 'Car could not be created.'}, status: :unprocessable_entity
         end
       end
 
       def edit
+        LogBroadcaster.log("Editing car details for car ID #{@car.id}", level: :info)
         render json: @car.as_json(
           include: {
             vehicle_brand: { only: [:id, :name] }
@@ -66,21 +72,27 @@ module Api
       end
 
       def update
+        LogBroadcaster.log("Attempting to update car details for car ID #{@car.id}", level: :info)
         begin
           @car.update!(car_params)
+          LogBroadcaster.log("Car updated successfully with ID #{@car.id}", level: :info)
           render json: @car, status: :ok
         rescue ActiveRecord::RecordInvalid => e
           Rails.logger.error "Car update failed: #{e.message}"
+          LogBroadcaster.log("Car update failed: #{e.message}", level: :error)
           render json: { error: 'Car could not be updated.' }, status: :unprocessable_entity
         end
       end
 
       def destroy
+        LogBroadcaster.log("Attempting to delete car ID #{@car.id}", level: :info)
         begin
           @car.destroy!
+          LogBroadcaster.log("Car deleted successfully with ID #{@car.id}", level: :info)
           render json: { message: 'Car was successfully destroyed.'} , status: :see_other
         rescue ActiveRecord::RecordNotDestroyed => e
           Rails.logger.error "Car deletion failed: #{e.message}"
+          LogBroadcaster.log("Car deletion failed: #{e.message}", level: :error)
           render json: { error: 'Car could not be deleted.' }, status: :unprocessable_entity
         end
       end

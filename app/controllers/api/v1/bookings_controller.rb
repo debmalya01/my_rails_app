@@ -7,6 +7,7 @@ module Api
 
       def index
         @bookings = Booking.all
+        LogBroadcaster.log("Fetched #{@bookings.size} bookings for user #{current_resource_owner.id}", level: :info)
         render json: @bookings.as_json(
           include: {
             car: { only: [:id, :make, :model, :year] },
@@ -19,6 +20,7 @@ module Api
 
       def show
         if @booking
+          LogBroadcaster.log("Showing booking details for booking ID #{@booking.id}", level: :info)
           render json: @booking.as_json(
             include: {
               car: { only: [:id, :make, :model, :year] },
@@ -33,10 +35,12 @@ module Api
       def new
         @car = Car.find(params[:car_id])
         @booking = @car.bookings.build
+        LogBroadcaster.log("Creating a new booking for car ID #{@car.id}", level: :info)
         render json: @booking, status: :ok
       end
       
       def edit
+        LogBroadcaster.log("Editing booking ID #{@booking.id}", level: :info)
         render json: @booking.as_json(
           include: {
             car: { only: [:id, :make, :model, :year] },
@@ -70,13 +74,16 @@ module Api
           begin
             @booking.save!
             Rails.logger.info "Booking saved successfully with ID: #{@booking.id}"
+            LogBroadcaster.log("Booking created successfully with ID #{@booking.id}", level: :info)
             render json: @booking, status: :created
           rescue ActiveRecord::RecordInvalid => e
             Rails.logger.error "Booking creation failed: #{e.message}"
+            LogBroadcaster.log("Booking creation failed: #{e.message}", level: :error)
             render json: { error: 'Booking could not be created.' }, status: :unprocessable_entity
           end
         rescue StandardError => e
           Rails.logger.warn "No compatible service center found for booking: #{e.message}"
+          LogBroadcaster.log("No compatible service center found for booking: #{e.message}", level: :warn)
           render json: { error: 'No nearby compatible service center found for the selected brand and location.' }, status: :unprocessable_entity
         end
       end
@@ -86,10 +93,12 @@ module Api
         if assign_nearest_center(@booking)
           begin
             @booking.update(booking_params)
-            Rails.logger.info "Booking updated successfully" 
+            Rails.logger.info "Booking updated successfully"
+            LogBroadcaster.log("Booking updated successfully with ID #{@booking.id}", level: :info)
             render json: @booking, status: :ok
           rescue ActiveRecord::RecordInvalid => e
             Rails.logger.error "Booking update failed: #{e.message}"
+            LogBroadcaster.log("Booking update failed: #{e.message}", level: :error)
             render json: { error: 'Booking could not be updated.' }, status: :unprocessable
           end
         else
@@ -102,9 +111,11 @@ module Api
         begin
           @booking.destroy!
           Rails.logger.info "Booking destroyed successfully"
+          LogBroadcaster.log("Booking deleted successfully with ID #{@booking.id}", level: :info)
           head :no_content
         rescue ActiveRecord::RecordNotDestroyed => e
           Rails.logger.error "Booking deletion failed: #{e.message}"
+          LogBroadcaster.log("Booking deletion failed: #{e.message}", level: :error)
           render json: { error: 'Booking could not be deleted.' }, status: :unprocessable_entity
         end
       end

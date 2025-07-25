@@ -7,7 +7,7 @@ class Api::V1::GarageVehicleBrandsController < ApplicationController
   def show
     vehicle_brands = VehicleBrand.all.order(:name)
     selected_brand_ids = @service_center.vehicle_brand_ids
-
+    LogBroadcaster.log("Fetched #{selected_brand_ids.size} vehicle brands for service center ID #{@service_center.id}", level: :info)
     render json: {
       vehicle_brands: vehicle_brands.map { |brand| { id: brand.id, name: brand.name } },
       selected_brand_ids: selected_brand_ids,
@@ -27,6 +27,7 @@ class Api::V1::GarageVehicleBrandsController < ApplicationController
     # Create new associations
     selected_brand_ids.each do |brand_id|
       @service_center.service_center_brands.create!(vehicle_brand_id: brand_id)
+      LogBroadcaster.log("Added vehicle brand ID #{brand_id} to service center ID #{@service_center.id}", level: :info)
     end
     
     render json: {

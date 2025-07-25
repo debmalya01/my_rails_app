@@ -13,6 +13,7 @@ module Api
           params[:q].slice!(:status_eq)
         end
         bookings = q.result.page(params[:page]).per(params[:per_page] || 5)
+        LogBroadcaster.log("Fetched #{bookings.size} bookings for garage ID #{@garage.id} - page #{bookings.current_page}", level: :info)
         render json: { 
           garage: @garage, 
           bookings: bookings.as_json(
@@ -29,6 +30,7 @@ module Api
       end
 
       def edit
+        LogBroadcaster.log("Editing booking ID #{@booking.id} for garage ID #{@garage.id}", level: :info)
         render json: @booking.as_json(
           include: {
             car: { only: [:id, :make, :model, :year] }
@@ -39,9 +41,11 @@ module Api
       def update
         begin
           @booking.update!(booking_params)
+          LogBroadcaster.log("Booking ID #{@booking.id} updated successfully for garage ID #{@garage.id}", level: :info)
           render json: @booking, status: :ok
         rescue ActiveRecord::RecordInvalid => e
           Rails.logger.error "Booking update failed: #{e.message}"
+          LogBroadcaster.log("Booking update failed: #{e.message}", level: :error)
           render json: { error: 'Booking status could not be updated.' }, status: :unprocessable_entity
         end
       end
@@ -50,6 +54,7 @@ module Api
       def set_garage
         @garage = current_resource_owner.service_center
         if params[:garage_id].to_s != @garage.id.to_s
+          LogBroadcaster.log("Unauthorized access attempt to garage ID #{params[:garage_id]} by user #{current_resource_owner.id}", level: :warn)
           render json: { error: 'You are not authorized to access this garage.' }, status: :forbidden
         end
       end
