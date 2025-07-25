@@ -56,6 +56,12 @@ gem "sassc-rails"
 # Doorkeeper for API authentication
 gem "doorkeeper"
 
+gem "kaminari" # Pagination for Active Record collections
+
+gem "ransack" # Search and filter for Active Record collections
+
+gem "redis"
+
 # Use Active Storage variants [https://guides.rubyonrails.org/active_storage_overview.html#transforming-images]
 # gem "image_processing", "~> 1.2"
 
@@ -90,6 +96,12 @@ end
 group :development, :test do
   gem "faker"
 end
+
+# Gemfile
+group :development, :test do
+  gem 'rubocop', require: false
+end
+
 
 group :test do
   gem 'simplecov', require: false

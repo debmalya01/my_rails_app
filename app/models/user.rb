@@ -4,7 +4,7 @@ class User < ApplicationRecord
   attr_accessor :garage_name, :license_number, :location, :pincode, :phone, :max_capacity_per_day
 
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable, :timeoutable
 
   def car_owner?
     type == 'CarOwner'

@@ -14,5 +14,12 @@ ActiveAdmin.register Booking do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
-  
+
+  scope :all, default: true
+  scope("Recent Bookings") { |bookings| bookings.where("created_at >= ?", 1.week.ago) }
+  scope("Pending Bookings") { |bookings| bookings.where(status: "pending") }
+  scope("In Service") { |bookings| bookings.where(status: "in_service") }
+  scope("Waiting for pickup") { |bookings| bookings.where(status: "waiting_for_pickup") }
+  scope("Cancelled") { |bookings| bookings.where(status: "cancelled") } 
+  scope("Completed") { |bookings| bookings.where(status: "dropped_off") }
 end

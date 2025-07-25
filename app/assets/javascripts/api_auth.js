@@ -34,7 +34,6 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('[DualLogin] Retrieved from sessionStorage:', email, password);
     console.log('[DualLogin] Attempting token fetch for:', email);
 
-    // TODO: Replace with your actual client_id and client_secret
     const client_id = 'LpY-ZnLlDOSzYI8smtc8POcZaXfHWgYj9wk7GVQjXPM';
     const client_secret = '_CvejnOYy4KeHRJbxcHrn2rINag7wD_p7RWnIUJGmtI';
 

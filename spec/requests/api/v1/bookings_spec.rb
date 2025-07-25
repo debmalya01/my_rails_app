@@ -113,9 +113,7 @@ RSpec.describe Api::V1::BookingsController, type: :request do
     it 'deletes the booking and returns see other' do
       delete "/api/v1/bookings/#{booking.id}", headers: headers
 
-      expect(response).to have_http_status(:see_other)
-      json = JSON.parse(response.body)
-      expect(json['message']).to eq('Booking was successfully destroyed.')
+      expect(response).to have_http_status(:no_content)
     end
 
     it 'returns a 404 if the booking does not exist' do

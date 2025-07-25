@@ -25,12 +25,17 @@ Rails.application.routes.draw do
         resources :invoices, only: [:show]
       end
     end
+    
+
   end
 
 
   # API routes
   namespace :api do
     namespace :v1 do 
+      get 'home', to: 'home#index'
+      get 'about', to: 'home#about'
+      
       resources :cars do
         resources :bookings, shallow: true
       end
@@ -39,12 +44,14 @@ Rails.application.routes.draw do
           resources :invoices, only: [:show]
         end
       end
+      resource :garage_vehicle_brands, only: [:show, :update], path: 'garage-vehicle-brands'
       resources :service_types, only: [:index, :show]
       resources :vehicle_brands, only: [:index]
       resources :users, only: [:show, :update]
     end
   end
     
+  mount ActionCable.server => '/cable'
   
   get "up" => "rails/health#show", as: :rails_health_check
 

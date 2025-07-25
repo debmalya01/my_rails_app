@@ -4,8 +4,7 @@ class Booking < ApplicationRecord
   belongs_to :car
   belongs_to :service_center, optional: true
 
-  has_many :booking_services, dependent: :destroy
-  has_many :service_types, through: :booking_services
+  has_and_belongs_to_many :service_types
   belongs_to :user, class_name: 'CarOwner', foreign_key: 'user_id'
   has_one :invoice, dependent: :destroy  
 
@@ -28,11 +27,11 @@ class Booking < ApplicationRecord
 
 
   def self.ransackable_attributes(auth_object = nil)
-    ["notes", "service_date", "status", "pincode", "car_id", "service_center_id", "id", "booking_services_id", "service_types_id", "user_id", "invoice_id"]
+    ["notes", "service_date", "status", "pincode", "car_id", "service_center_id", "id", "user_id", "invoice_id"]
   end
 
   def self.ransackable_associations(auth_object = nil)
-    %w[car service_center]
+    %w[car service_center service_types]
   end
 
   private

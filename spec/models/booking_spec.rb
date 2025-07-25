@@ -17,11 +17,6 @@ RSpec.describe Booking, type: :model do
       expect(booking).not_to be_valid
     end
 
-    # it "is not valid without a service center" do
-    #   booking = FactoryBot.build(:booking, service_center: nil)
-    #   expect(booking).not_to be_valid
-    # end
-
     it "is not valid without a service date" do
       booking = FactoryBot.build(:booking, service_date: nil)
       expect(booking).not_to be_valid

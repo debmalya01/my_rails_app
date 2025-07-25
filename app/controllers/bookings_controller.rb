@@ -1,5 +1,5 @@
 class BookingsController < UserController
-  before_action :set_booking, only: %i[ show edit update destroy ]
+  before_action :set_booking, only: %i[ edit update destroy ]
 
   # GET /bookings or /bookings.json
   def index

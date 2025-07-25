@@ -9,7 +9,7 @@ class CenterMatchingService
                 .includes(:bookings)
                 .where(vehicle_brands: { id: car_brand_id })
                 .where.not(pincode: nil)
-    Rails.logger.info "Found #{centers} service centers for brand ID #{car_brand_id}" 
+    Rails.logger.info "Found #{centers.size} service centers for brand ID #{car_brand_id}"
 
     available_centers = centers.select do |center|
       center.bookings.select { |b| b.service_date == service_date }.size < center.max_capacity_per_day
@@ -18,8 +18,9 @@ class CenterMatchingService
     Rails.logger.info "Available centers for brand ID #{car_brand_id} on #{service_date}: #{available_centers.inspect}"
 
     available_centers.min_by do |center|
-      (center.pincode.to_i - user_pincode).abs
-      Rails.logger.info "Calculating distance for center #{center.garage_name} with pincode #{center.pincode}"
+      distance = (center.pincode.to_i - user_pincode).abs
+      Rails.logger.info "Calculating distance for center #{center.garage_name} with pincode #{center.pincode} ------> #{distance}"
+      distance
     end
   end
 end
