@@ -5,6 +5,30 @@ module Api
       before_action :doorkeeper_authorize!
       before_action :set_booking, only: [:show, :edit, :update, :destroy]
 
+      def history
+        page = params[:page] || 1
+        per_page = params[:per_page] || 2
+        
+        @bookings = current_resource_owner.bookings.includes(:car, :service_center, :service_types, :invoice)
+                                                   .order(created_at: :desc)
+                                                   .page(page).per(per_page)
+        
+        LogBroadcaster.log("Fetched #{@bookings.size} booking history entries for user #{current_resource_owner.id} (page #{page})", level: :info)
+        
+        # Add pagination metadata to the response
+        render json: {
+          bookings: render_to_string('api/v1/bookings/history', formats: [:json]),
+          pagination: {
+            current_page: @bookings.current_page,
+            total_pages: @bookings.total_pages,
+            total_count: @bookings.total_count,
+            per_page: @bookings.limit_value,
+            next_page: @bookings.next_page,
+            prev_page: @bookings.prev_page
+          }
+        }, status: :ok
+      end
+
       # def index
       #   @bookings = Booking.all
       #   LogBroadcaster.log("Fetched #{@bookings.size} bookings for user #{current_resource_owner.id}", level: :info)

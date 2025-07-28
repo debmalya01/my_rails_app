@@ -11,3 +11,6 @@ pin "rails-ujs", to: "rails-ujs.js"
 pin_all_from "app/javascript/controllers", under: "controllers"
 pin "@rails/actioncable", to: "actioncable.esm.js"
 pin_all_from "app/javascript/channels", under: "channels"
+
+# Pin booking history API for asset pipeline compatibility
+pin "booking_history_api", to: "booking_history_api.js"

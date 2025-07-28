@@ -49,6 +49,9 @@
                 <li class="nav-item">
                   <%= link_to "My Cars", cars_path, class: "nav-link" %>
                 </li>
+                <li class="nav-item">
+                  <%= link_to "Booking History", booking_history_path, class: "nav-link" %>
+                </li>
               <% elsif current_user.garage_admin? %>
                 <li class="nav-item">
                   <%= link_to "My Garage", garages_path, class: "nav-link" %>

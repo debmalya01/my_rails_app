@@ -5,4 +5,8 @@ class HomeController < ApplicationController
 
   def about
   end
+
+  def booking_history
+    # This view will be powered entirely by the API
+  end
 end
