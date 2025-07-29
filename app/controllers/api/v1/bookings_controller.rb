@@ -3,6 +3,7 @@ module Api
     class BookingsController < ApplicationController
       skip_before_action :verify_authenticity_token
       before_action :doorkeeper_authorize!
+      before_action :ensure_car_owner!
       before_action :set_booking, only: [:show, :edit, :update, :destroy]
 
       def history
@@ -147,6 +148,16 @@ module Api
 
 
       private
+      
+      def ensure_car_owner!
+        unless current_resource_owner&.car_owner?
+          LogBroadcaster.log("Access denied: User #{current_resource_owner&.id || 'unknown'} is not a car owner", level: :warn)
+          render json: { 
+            error: 'Access denied. Only car owners can access booking endpoints.' 
+          }, status: :forbidden
+        end
+      end
+      
       def set_booking
         @booking = current_resource_owner.bookings.find(params[:id])
 

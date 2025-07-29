@@ -3,6 +3,7 @@ module Api
     class GaragesController < ApplicationController
       skip_before_action :verify_authenticity_token
       before_action :doorkeeper_authorize!
+      before_action :ensure_garage_admin 
 
       def index
         @garages = [current_resource_owner.service_center]
@@ -35,6 +36,12 @@ module Api
       private
       def current_resource_owner
         User.find(doorkeeper_token.resource_owner_id) if doorkeeper_token
+      end
+
+      def ensure_garage_admin
+        unless current_resource_owner.garage_admin?
+          render json: { error: 'Access denied.' }, status: :forbidden
+        end
       end
     end
   end
