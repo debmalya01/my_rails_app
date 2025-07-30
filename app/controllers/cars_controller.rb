@@ -1,5 +1,5 @@
 class CarsController < UserController
-  before_action :set_car, only: %i[edit update destroy ]
+  before_action :set_car, only: %i[show edit update destroy ]
 
   # GET /cars or /cars.json
   def index
@@ -8,6 +8,7 @@ class CarsController < UserController
 
   # GET /cars/1 or /cars/1.json
   def show
+    @car = current_user.cars.find(params[:id])
   end
 
   # GET /cars/new
@@ -54,7 +55,7 @@ class CarsController < UserController
     @car.destroy!
 
     respond_to do |format|
-      format.html { redirect_to cars_path, status: :see_other, notice: "Car was successfully destroyed." }
+      format.html { redirect_to cars_path, status: :see_other, notice: "Car was successfully deleted." }
       format.json { head :no_content }
     end
   end

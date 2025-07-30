@@ -29,14 +29,23 @@ RSpec.describe Api::V1::CarsController, type: :request do
   describe 'GET /api/v1/cars' do
     context 'when user is a car owner' do
       it 'returns a successful response with cars' do
+        # Stub logging
+        allow(LogBroadcaster).to receive(:log)
+        
         get "/api/v1/cars", headers: car_owner_headers 
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
         cars = json['cars']
         expect(cars.first['id']).to eq(car.id)
+        
+        # Verify logging was called
+        expect(LogBroadcaster).to have_received(:log).with(match(/Fetched \d+ cars for user/), level: :info)
       end
 
       it 'only returns cars belonging to the authenticated user' do
+        # Stub logging
+        allow(LogBroadcaster).to receive(:log)
+        
         get "/api/v1/cars", headers: car_owner_headers
         expect(response).to have_http_status(:ok)
         json = JSON.parse(response.body)
@@ -69,8 +78,14 @@ RSpec.describe Api::V1::CarsController, type: :request do
   describe 'GET /api/v1/cars/:id' do
     context 'when user is a car owner' do
       it 'returns a successful response with the requested car' do
+        # Stub logging
+        allow(LogBroadcaster).to receive(:log)
+        
         get "/api/v1/cars/#{car.id}", headers: car_owner_headers
         expect(response).to have_http_status(:ok)
+        
+        # Verify logging was called
+        expect(LogBroadcaster).to have_received(:log).with(match(/Showing car details for car ID/), level: :info)
       end
 
       it 'returns 404 if the car does not exist' do

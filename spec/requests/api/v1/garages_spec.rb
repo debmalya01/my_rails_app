@@ -15,24 +15,34 @@ RSpec.describe Api::V1::GaragesController, type: :request do
 
   describe 'GET /api/v1/garages' do
     it 'returns a successful response with garages' do
+      # Stub logging
+      allow(LogBroadcaster).to receive(:log)
+      
       get "/api/v1/garages", headers: headers
-      puts response.body
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json).to be_an(Array)
       expect(json.first['id']).to eq(service_center.id)
+      
+      # Verify logging was called (match actual message format)
+      expect(LogBroadcaster).to have_received(:log).with(match(/garage for user/), level: :info)
     end
   end
 
   describe 'GET /api/v1/garages/:id' do
     it 'returns a successful response with the requested garage' do
+      # Stub logging
+      allow(LogBroadcaster).to receive(:log)
+      
       get "/api/v1/garages/#{service_center.id}", headers: headers
-      puts response.body
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json['garage']['id']).to eq(service_center.id)
       expect(json['garage']['user_id']).to eq(user.id)
       expect(json['bookings']).to be_an(Array)
+      
+      # Verify logging was called
+      expect(LogBroadcaster).to have_received(:log).with(match(/Showing garage details for garage ID/), level: :info)
     end
   end
 end
