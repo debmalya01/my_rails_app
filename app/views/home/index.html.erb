@@ -12,10 +12,10 @@
         <% unless user_signed_in? %>
           <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mb-4">
             <%= link_to new_user_registration_path(type: "CarOwner"), class: "btn btn-lg btn-primary px-5 py-3 shadow-sm", style: "border-radius: 50px; font-weight: 600;" do %>
-              <i class="fas fa-car me-2"></i>I'm a Car Owner
+              <i class="fas fa-car me-2"></i> I'm a Car Owner
             <% end %>
             <%= link_to new_user_registration_path(type: "GarageAdmin"), class: "btn btn-lg btn-outline-primary px-5 py-3 shadow-sm", style: "border-radius: 50px; font-weight: 600;" do %>
-              <i class="fas fa-wrench me-2"></i>I'm a Garage Admin
+              <i class="fas fa-wrench me-2"></i> I'm a Garage Admin
             <% end %>
           </div>
           <p class="mt-4 text-muted">
@@ -27,14 +27,14 @@
             <p class="h5 text-primary mb-3">Welcome back, <%= current_user.name %>!</p>
             <% if current_user.car_owner? %>
               <%= link_to cars_path, class: "btn btn-lg btn-primary px-5 py-3 shadow-sm me-3", style: "border-radius: 50px; font-weight: 600;" do %>
-                <i class="fas fa-car me-2"></i>View My Cars
+                <i class="fas fa-car me-2"></i> View My Cars
               <% end %>
               <%= link_to booking_history_path, class: "btn btn-lg btn-outline-primary px-5 py-3 shadow-sm", style: "border-radius: 50px; font-weight: 600;" do %>
-                <i class="fas fa-history me-2"></i>Booking History
+                <i class="fas fa-history me-2"></i> Booking History
               <% end %>
             <% elsif current_user.garage_admin? %>
               <%= link_to garages_path, class: "btn btn-lg btn-primary px-5 py-3 shadow-sm", style: "border-radius: 50px; font-weight: 600;" do %>
-                <i class="fas fa-wrench me-2"></i>Manage Garage
+                <i class="fas fa-wrench me-2"></i> Manage Garage
               <% end %>
             <% end %>
           </div>
