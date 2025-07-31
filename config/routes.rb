@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   get "/about", to: "home#about"
 
   authenticate :user, lambda { |u| u.car_owner? } do
+    get 'booking_history', to: 'home#booking_history', as: 'booking_history'
     resources :cars do
       resources :bookings, shallow: true
     end
@@ -35,6 +36,9 @@ Rails.application.routes.draw do
     namespace :v1 do 
       get 'home', to: 'home#index'
       get 'about', to: 'home#about'
+      
+      # Booking history route must come before the nested resources
+      get 'bookings/history', to: 'bookings#history'
       
       resources :cars do
         resources :bookings, shallow: true

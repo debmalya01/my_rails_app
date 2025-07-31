@@ -1,51 +1,351 @@
 <!-- Hero Section -->
-<section class="py-5 text-center bg-light">
+<section class="py-5 text-center" style="background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); min-height: 60vh; display: flex; align-items: center;">
   <div class="container">
-    <h1 class="display-4 fw-bold">Welcome to Mechanico</h1>
-    <p class="lead text-muted">
-      Manage your vehicle or your garage – all from one platform.
-    </p>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <h1 class="display-3 fw-bold text-primary mb-4">Welcome to Mechanico</h1>
+        <p class="lead text-muted mb-5" style="font-size: 1.3rem; line-height: 1.6;">
+          Your trusted platform for seamless vehicle management and garage operations. 
+          Experience the future of automotive service booking.
+        </p>
 
-    <% unless user_signed_in? %>
-      <div class="d-flex justify-content-center gap-3 mt-4">
-        <%= link_to "I'm a Car Owner", new_user_registration_path(type: "CarOwner"), class: "btn btn-lg btn-primary px-4" %>
-        <%= link_to "I'm a Garage Admin", new_user_registration_path(type: "GarageAdmin"), class: "btn btn-lg btn-outline-secondary px-4" %>
+        <% unless user_signed_in? %>
+          <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mb-4">
+            <%= link_to new_user_registration_path(type: "CarOwner"), class: "btn btn-lg btn-primary px-5 py-3 shadow-sm", style: "border-radius: 50px; font-weight: 600;" do %>
+              <i class="fas fa-car me-2"></i> I'm a Car Owner
+            <% end %>
+            <%= link_to new_user_registration_path(type: "GarageAdmin"), class: "btn btn-lg btn-outline-primary px-5 py-3 shadow-sm", style: "border-radius: 50px; font-weight: 600;" do %>
+              <i class="fas fa-wrench me-2"></i> I'm a Garage Admin
+            <% end %>
+          </div>
+          <p class="mt-4 text-muted">
+            Already have an account? 
+            <%= link_to "Sign in here", new_user_session_path, class: "text-primary fw-semibold text-decoration-none" %>
+          </p>
+        <% else %>
+          <div class="mt-4">
+            <p class="h5 text-primary mb-3">Welcome back, <%= current_user.name %>!</p>
+            <% if current_user.car_owner? %>
+              <%= link_to cars_path, class: "btn btn-lg btn-primary px-5 py-3 shadow-sm me-3", style: "border-radius: 50px; font-weight: 600;" do %>
+                <i class="fas fa-car me-2"></i> View My Cars
+              <% end %>
+              <%= link_to booking_history_path, class: "btn btn-lg btn-outline-primary px-5 py-3 shadow-sm", style: "border-radius: 50px; font-weight: 600;" do %>
+                <i class="fas fa-history me-2"></i> Booking History
+              <% end %>
+            <% elsif current_user.garage_admin? %>
+              <%= link_to garages_path, class: "btn btn-lg btn-primary px-5 py-3 shadow-sm", style: "border-radius: 50px; font-weight: 600;" do %>
+                <i class="fas fa-wrench me-2"></i> Manage Garage
+              <% end %>
+            <% end %>
+          </div>
+        <% end %>
       </div>
-      <p class="mt-3 small text-muted">Already have an account? <%= link_to "Login here", new_user_session_path %></p>
-    <% end %>
-
+    </div>
   </div>
 </section>
 
 
 <!-- Features Section -->
-<section class="py-5 bg-white">
+<section class="py-5" style="background: white;">
   <div class="container">
-    <div class="row text-center">
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <h5 class="card-title">🛠 Full Service</h5>
-            <p class="card-text text-muted">Schedule and track your vehicle's services with ease.</p>
+    <div class="row justify-content-center mb-5">
+      <div class="col-lg-6 text-center">
+        <h2 class="display-5 fw-bold text-primary mb-3">Why Choose Mechanico?</h2>
+        <% if user_signed_in? %>
+          <% if current_user.car_owner? %>
+            <p class="lead text-muted">Experience hassle-free vehicle management with our comprehensive platform</p>
+          <% elsif current_user.garage_admin? %>
+            <p class="lead text-muted">Streamline your garage operations and grow your business with our powerful tools</p>
+          <% end %>
+        <% else %>
+          <p class="lead text-muted">The perfect platform for both vehicle owners and garage administrators</p>
+        <% end %>
+      </div>
+    </div>
+    
+    <div class="row g-4">
+      <% if user_signed_in? && current_user.garage_admin? %>
+        <!-- Garage Admin Features -->
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #007bff, #0056b3); border-radius: 20px;">
+                  <i class="fas fa-chart-line fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">Business Analytics</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Track your garage's performance with detailed analytics and insights to grow your business.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <h5 class="card-title">📅 Easy Booking</h5>
-            <p class="card-text text-muted">Book appointments in just a few clicks with nearby garages.</p>
+        
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #28a745, #1e7e34); border-radius: 20px;">
+                  <i class="fas fa-tasks fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">Booking Management</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Efficiently manage customer bookings, schedules, and service appointments from one dashboard.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-md-4 mb-4">
-        <div class="card h-100 shadow-sm border-0">
-          <div class="card-body">
-            <h5 class="card-title">📋 Vehicle History</h5>
-            <p class="card-text text-muted">Maintain your full vehicle service history digitally.</p>
+        
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #ffc107, #e0a800); border-radius: 20px;">
+                  <i class="fas fa-users fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">Customer Management</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Build lasting relationships with customers through organized profiles and service history.
+              </p>
+            </div>
           </div>
         </div>
-      </div>
+      <% elsif user_signed_in? && current_user.car_owner? %>
+        <!-- Car Owner Features -->
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #007bff, #0056b3); border-radius: 20px;">
+                  <i class="fas fa-tools fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">Full Service Management</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Schedule, track, and manage your vehicle's complete service history with our intuitive platform.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #28a745, #1e7e34); border-radius: 20px;">
+                  <i class="fas fa-calendar-check fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">Smart Booking System</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Book appointments with nearby certified garages in just a few clicks. No more waiting on hold.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #ffc107, #e0a800); border-radius: 20px;">
+                  <i class="fas fa-history fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">Digital History</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Keep your complete vehicle service history organized and accessible from anywhere, anytime.
+              </p>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <!-- Universal Features for Non-Signed In Users -->
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #007bff, #0056b3); border-radius: 20px;">
+                  <i class="fas fa-car fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">For Car Owners</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Manage your vehicles, book services, and track maintenance history all in one convenient platform.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #28a745, #1e7e34); border-radius: 20px;">
+                  <i class="fas fa-wrench fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">For Garage Owners</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Streamline operations, manage bookings, and grow your garage business with powerful management tools.
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm" style="border-radius: 20px; transition: transform 0.3s ease; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+            <div class="card-body text-center p-4">
+              <div class="mb-3">
+                <div class="d-inline-flex align-items-center justify-content-center" style="width: 80px; height: 80px; background: linear-gradient(135deg, #ffc107, #e0a800); border-radius: 20px;">
+                  <i class="fas fa-handshake fa-2x text-white"></i>
+                </div>
+              </div>
+              <h5 class="card-title fw-bold text-primary mb-3">Seamless Connection</h5>
+              <p class="card-text text-muted" style="line-height: 1.6;">
+                Connect car owners with trusted garages for reliable, efficient, and transparent automotive services.
+              </p>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
 </section>
+
+<!-- Footer -->
+<footer class="py-5" style="background-color: #2c3e50; color: white;">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 mb-4">
+        <h5 class="fw-bold mb-3" style="color: #3498db;">Mechanico</h5>
+        <p class="text-light mb-3" style="opacity: 0.8;">
+          Your trusted platform for seamless vehicle management and garage operations. 
+          Connecting car owners with reliable service providers.
+        </p>
+        <div class="d-flex gap-3">
+          <a href="#" class="text-light" style="opacity: 0.8; font-size: 1.5rem;">
+            <i class="fab fa-facebook"></i>
+          </a>
+          <a href="#" class="text-light" style="opacity: 0.8; font-size: 1.5rem;">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="text-light" style="opacity: 0.8; font-size: 1.5rem;">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="text-light" style="opacity: 0.8; font-size: 1.5rem;">
+            <i class="fab fa-linkedin"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="fw-bold mb-3" style="color: #3498db;">For Car Owners</h6>
+        <ul class="list-unstyled">
+          <% if user_signed_in? && current_user.car_owner? %>
+            <li class="mb-2">
+              <%= link_to "My Cars", cars_path, class: "text-light text-decoration-none", style: "opacity: 0.8;" %>
+            </li>
+            <li class="mb-2">
+              <%= link_to "Booking History", booking_history_path, class: "text-light text-decoration-none", style: "opacity: 0.8;" %>
+            </li>
+          <% else %>
+            <li class="mb-2">
+              <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Vehicle Management</a>
+            </li>
+            <li class="mb-2">
+              <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Service Booking</a>
+            </li>
+          <% end %>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Find Garages</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Support</a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="fw-bold mb-3" style="color: #3498db;">For Garages</h6>
+        <ul class="list-unstyled">
+          <% if user_signed_in? && current_user.garage_admin? %>
+            <li class="mb-2">
+              <%= link_to "Manage Garage", garages_path, class: "text-light text-decoration-none", style: "opacity: 0.8;" %>
+            </li>
+          <% else %>
+            <li class="mb-2">
+              <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Join as Partner</a>
+            </li>
+          <% end %>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Business Tools</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Analytics</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Resources</a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="fw-bold mb-3" style="color: #3498db;">Company</h6>
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">About Us</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Contact</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Careers</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Blog</a>
+          </li>
+        </ul>
+      </div>
+      
+      <div class="col-lg-2 col-md-6 mb-4">
+        <h6 class="fw-bold mb-3" style="color: #3498db;">Legal</h6>
+        <ul class="list-unstyled">
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Privacy Policy</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Terms of Service</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Cookie Policy</a>
+          </li>
+          <li class="mb-2">
+            <a href="#" class="text-light text-decoration-none" style="opacity: 0.8;">Disclaimer</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    
+    <hr class="my-4" style="opacity: 0.3;">
+    
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <p class="mb-0" style="opacity: 0.8;">
+          &copy; 2025 Mechanico. All rights reserved.
+        </p>
+      </div>
+      <div class="col-md-6 text-md-end">
+        <p class="mb-0" style="opacity: 0.8;">
+          Made with <i class="fas fa-heart text-danger"></i> for better automotive experiences
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Add Font Awesome if not already included -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">

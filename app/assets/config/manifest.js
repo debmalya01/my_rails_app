@@ -9,6 +9,7 @@
 //= link bookings_show.js
 //= link bookings.js
 //= link bookings_form.js
+//= link booking_history_api.js
 //= link garages.js
 //= link garages_show.js
 //= link garage_bookings.js

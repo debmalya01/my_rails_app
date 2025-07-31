@@ -19,7 +19,13 @@ RSpec.describe CarsController, type: :controller do
     end
   end
 
-  
+  describe 'GET #show' do
+    it 'renders the show page successfully' do
+      get :show, params: { id: car.id }
+      expect(response).to be_successful
+      expect(assigns(:car)).to eq(car)
+    end
+  end
 
   describe 'GET #new' do
     it 'renders the new page successfully' do
@@ -45,6 +51,23 @@ RSpec.describe CarsController, type: :controller do
       expect(response).to redirect_to(Car.last)
       expect(flash[:notice]).to eq("Car was successfully created.")
     end
+
+    it 'renders new template when creation fails' do
+      # Stub validation to fail
+      allow_any_instance_of(Car).to receive(:save).and_return(false)
+      allow_any_instance_of(Car).to receive(:errors).and_return(double(full_messages: ["Model can't be blank"]))
+      
+      post :create, params: {
+        car: {
+          model: '', # Invalid data
+          year: 2021,
+          registration_number: 'MH12ABC1234',
+          vehicle_brand_id: vehicle_brand.id
+        }
+      }
+
+      expect(response).to render_template(:new)
+    end
   end
 
   describe 'GET #edit' do
@@ -52,6 +75,43 @@ RSpec.describe CarsController, type: :controller do
       get :edit, params: { id: car.id }
       expect(response).to be_successful
       expect(assigns(:car)).to eq(car)
+    end
+  end
+
+  describe 'PATCH #update' do
+    it 'updates the car and redirects' do
+      patch :update, params: { 
+        id: car.id, 
+        car: { model: 'Updated Model' }
+      }
+      
+      expect(response).to redirect_to(car)
+      expect(car.reload.model).to eq('Updated Model')
+      expect(flash[:notice]).to eq("Car was successfully updated.")
+    end
+
+    it 'renders edit template when update fails' do
+      # Stub validation to fail
+      allow_any_instance_of(Car).to receive(:update).and_return(false)
+      allow_any_instance_of(Car).to receive(:errors).and_return(double(full_messages: ["Model can't be blank"]))
+      
+      patch :update, params: { 
+        id: car.id, 
+        car: { model: '' } # Invalid data
+      }
+      
+      expect(response).to render_template(:edit)
+    end
+  end
+
+  describe 'DELETE #destroy' do
+    it 'deletes the car and redirects' do
+      expect {
+        delete :destroy, params: { id: car.id }
+      }.to change(Car, :count).by(-1)
+      
+      expect(response).to redirect_to(cars_path)
+      expect(flash[:notice]).to eq("Car was successfully deleted.")
     end
   end
 

@@ -16,27 +16,42 @@ RSpec.describe "Api::V1::GarageBookingsController", type: :request do
 
   describe "GET /api/v1/garages/:id" do
     it "returns a list of bookings for the garage" do
+      # Stub logging
+      allow(LogBroadcaster).to receive(:log)
+      
       get "/api/v1/garages/#{service_center.id}", headers: headers
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json["garage"]["id"]).to eq(service_center.id)
       expect(json["bookings"].first["id"]).to eq(booking.id)
       expect(json["bookings"].first["car"]["id"]).to eq(car.id)
+      
+      # Verify logging was called
+      expect(LogBroadcaster).to have_received(:log).with(match(/Showing garage details for garage ID/), level: :info)
     end
   end
 
   describe "GET /api/v1/garages/:id/bookings/:id/edit" do
     it "returns a specific booking's details" do
+      # Stub logging
+      allow(LogBroadcaster).to receive(:log)
+      
       get "/api/v1/garages/#{service_center.id}/bookings/#{booking.id}/edit", headers: headers
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json["id"]).to eq(booking.id)
       expect(json["car"]["id"]).to eq(car.id)
+      
+      # Verify logging was called
+      expect(LogBroadcaster).to have_received(:log).with(match(/Editing booking ID/), level: :info)
     end
   end
 
   describe "PUT /api/v1/garages/:id/bookings/:id" do
     it "updates the booking status" do
+      # Stub logging
+      allow(LogBroadcaster).to receive(:log)
+      
       put "/api/v1/garages/#{service_center.id}/bookings/#{booking.id}", params: {
         booking: { status: "in_service" }
       }, headers: headers
@@ -44,16 +59,25 @@ RSpec.describe "Api::V1::GarageBookingsController", type: :request do
       expect(response).to have_http_status(:ok)
       booking.reload
       expect(booking.status).to eq("in_service")
+      
+      # Verify logging was called (match actual message format)
+      expect(LogBroadcaster).to have_received(:log).with(match(/updated successfully for garage ID/), level: :info)
     end
 
     it "returns 422 if update fails" do
+      # Stub logging
+      allow(LogBroadcaster).to receive(:log)
+      
+      # Stub the booking to make update! raise an error
+      allow_any_instance_of(Booking).to receive(:update!).and_raise(ActiveRecord::RecordInvalid.new(booking))
+      
       put "/api/v1/garages/#{service_center.id}/bookings/#{booking.id}", params: {
-        booking: { status: nil }
+        booking: { status: "in_service" }
       }, headers: headers
 
       expect(response).to have_http_status(:unprocessable_entity)
       json = JSON.parse(response.body)
-      expect(json["error"]).to eq("Booking status could not be updated.")
+      expect(json['error']).to eq("Booking status could not be updated.")
     end
   end
 

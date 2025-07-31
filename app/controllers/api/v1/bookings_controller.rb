@@ -3,32 +3,58 @@ module Api
     class BookingsController < ApplicationController
       skip_before_action :verify_authenticity_token
       before_action :doorkeeper_authorize!
+      before_action :ensure_car_owner!
       before_action :set_booking, only: [:show, :edit, :update, :destroy]
 
-      def index
-        @bookings = Booking.all
-        LogBroadcaster.log("Fetched #{@bookings.size} bookings for user #{current_resource_owner.id}", level: :info)
-        render json: @bookings.as_json(
-          include: {
-            car: { only: [:id, :make, :model, :year] },
-            service_center: { only: [:id, :garage_name, :phone] },
-            # service_types: { only: [:id, :name, :base_price] },
-            # invoice: { only: [:id, :amount, :status, :issued_at] }
+      def history
+        page = params[:page] || 1
+        per_page = params[:per_page] || 2
+        
+        @bookings = current_resource_owner.bookings.includes(:car, :service_center, :service_types, :invoice)
+                                                   .order(created_at: :desc)
+                                                   .page(page).per(per_page)
+        
+        LogBroadcaster.log("Fetched #{@bookings.size} booking history entries for user #{current_resource_owner.id} (page #{page})", level: :info)
+        
+        # Add pagination metadata to the response
+        render json: {
+          bookings: render_to_string('api/v1/bookings/history', formats: [:json]),
+          pagination: {
+            current_page: @bookings.current_page,
+            total_pages: @bookings.total_pages,
+            total_count: @bookings.total_count,
+            per_page: @bookings.limit_value,
+            next_page: @bookings.next_page,
+            prev_page: @bookings.prev_page
           }
-        ), status: :ok
+        }, status: :ok
       end
+
+      # def index
+      #   @bookings = Booking.all
+      #   LogBroadcaster.log("Fetched #{@bookings.size} bookings for user #{current_resource_owner.id}", level: :info)
+      #   render json: @bookings.as_json(
+      #     include: {
+      #       car: { only: [:id, :make, :model, :year] },
+      #       service_center: { only: [:id, :garage_name, :phone] },
+      #       # service_types: { only: [:id, :name, :base_price] },
+      #       # invoice: { only: [:id, :amount, :status, :issued_at] }
+      #     }
+      #   ), status: :ok
+      # end
 
       def show
         if @booking
           LogBroadcaster.log("Showing booking details for booking ID #{@booking.id}", level: :info)
-          render json: @booking.as_json(
-            include: {
-              car: { only: [:id, :make, :model, :year] },
-              service_center: { only: [:id, :garage_name, :phone] },
-              service_types: { only: [:id, :name, :base_price] },
-              invoice: { only: [:id, :amount, :status, :issued_at] }
-            }
-          ), status: :ok
+          # render json: @booking.as_json(
+          #   include: {
+          #     car: { only: [:id, :make, :model, :year] },
+          #     service_center: { only: [:id, :garage_name, :phone] },
+          #     service_types: { only: [:id, :name, :base_price] },
+          #     invoice: { only: [:id, :amount, :status, :issued_at] }
+          #   }
+          # ), status: :ok
+          render 'api/v1/bookings/show', formats: [:json], status: :ok
         end
       end
 
@@ -122,6 +148,16 @@ module Api
 
 
       private
+      
+      def ensure_car_owner!
+        unless current_resource_owner&.car_owner?
+          LogBroadcaster.log("Access denied: User #{current_resource_owner&.id || 'unknown'} is not a car owner", level: :warn)
+          render json: { 
+            error: 'Access denied. Only car owners can access booking endpoints.' 
+          }, status: :forbidden
+        end
+      end
+      
       def set_booking
         @booking = current_resource_owner.bookings.find(params[:id])
 

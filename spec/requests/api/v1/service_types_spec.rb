@@ -6,12 +6,18 @@ RSpec.describe Api::V1::ServiceTypesController, type: :request do
     it 'returns a successful response with all service types' do
       FactoryBot.create_list(:service_type, 5) # Create some service types for testing
       
+      # Stub logging
+      allow(LogBroadcaster).to receive(:log)
+      
       get "/api/v1/service_types"
       
       expect(response).to have_http_status(:ok)
       json = JSON.parse(response.body)
       expect(json).to be_an(Array)
       expect(json.size).to eq(5) # Adjust based on how many you created
+      
+      # Verify logging was called
+      expect(LogBroadcaster).to have_received(:log).with("Fetched 5 service types", level: :info)
     end
   end
 end
